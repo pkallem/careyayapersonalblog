@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import Layout from "../components/layout"
-import AccessDenied from "../components/access-denied"
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
@@ -24,7 +23,7 @@ export default function ProtectedPage() {
   if (!session) {
     return (
       <Layout>
-        <AccessDenied />
+        <h1>You are not logged in.</h1>
       </Layout>
     )
   }

@@ -34,8 +34,8 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.FACEBOOK_SECRET,
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: '0ae75bbfb9e3d585d72e',
+      clientSecret: 'fb24571af8e2647ef10af965f96a6368bd7fc27e'
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
@@ -55,9 +55,15 @@ export const authOptions: NextAuthOptions = {
     colorScheme: "light",
   },
   callbacks: {
-    async jwt({ token }) {
-      token.userRole = "admin"
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+      }
       return token
+    },
+    async session({session, token}){
+      session.user.id = token.id
+      return session
     },
   },
 }
