@@ -38,8 +38,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: 'fb24571af8e2647ef10af965f96a6368bd7fc27e'
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: '456922698011-4pv47u72g6nonk8bbnq292io0g2pk7vi.apps.googleusercontent.com',
+      clientSecret: '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',
+      
     }),
     TwitterProvider({
       clientId: process.env.TWITTER_ID,

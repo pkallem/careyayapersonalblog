@@ -3,6 +3,9 @@ import styles from '../styles/Home.module.css';
 import CreateBlogPopup from '../components/CreateBlogPopup';
 import Link from 'next/link';
 import Layout from '../components/layout';
+import { useSession } from 'next-auth/react'; // Import useSession hook
+
+
 
 interface Blog {
   id: number;
@@ -15,6 +18,8 @@ interface HomeProps {}
 export default function Home(props: HomeProps) {
   const [apiResult, setApiResult] = useState<Blog[]>([]);
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const { data: session, status } = useSession(); // Use useSession hook to access the session
+  const user_id = session?.user?.id;
 
   const fetchBlogs = async () => {
     try {
@@ -26,20 +31,6 @@ export default function Home(props: HomeProps) {
     }
   };
 
-  const handleDeleteClick = async (id: number) => {
-    try {
-      const response = await fetch(`/api/hello/${id}`, { method: 'DELETE' });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      fetchBlogs();
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
   const handleAddBlog = async (title: string, content: string) => {
     try {
       const response = await fetch('/api/hello', {
@@ -47,18 +38,19 @@ export default function Home(props: HomeProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ title, content, user_id }), // Add user_id to the request payload
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
+  
       fetchBlogs();
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchBlogs();
@@ -66,26 +58,24 @@ export default function Home(props: HomeProps) {
 
   return (
     <Layout>
+      
     <div className={styles.container}>
       <main className={styles.main}>
-        <button className={styles.addButton} onClick={() => setShowPopup(true)}>
-          +
-        </button>
+
 
         {showPopup && <CreateBlogPopup onClose={() => setShowPopup(false)} onAddBlog={handleAddBlog} />}
-
+        <button onClick={() => setShowPopup(true)}>
+          +
+        </button>
         <div className={styles.blogList}>
+
           {apiResult.map((blog) => (
             <div key={blog.id} className={styles.blogBox}>
               <Link href={`/api/blogs/${blog.id}`}>
                   <h2 className={styles.blogTitle}>{blog.title}</h2>
                   <p className={styles.blogContent}>{blog.content}</p>
+                  <p className={styles.blogContent}>{blog.user_id}</p>
               </Link>
-              <div className={styles.blogActions}>
-                <button onClick={() => handleDeleteClick(blog.id)} className={styles.deleteButton}>
-                  <span className={styles.dots}>...</span>
-                </button>
-              </div>
             </div>
           ))}
         </div>
