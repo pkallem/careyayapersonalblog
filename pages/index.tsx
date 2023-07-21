@@ -106,25 +106,26 @@ export default function Home(props: HomeProps) {
           {showEditPopup && blogBeingEdited && <EditBlogPopup blog={blogBeingEdited} onClose={() => setShowEditPopup(false)} onEditBlog={handleEditBlog} />}
           <button onClick={() => setShowPopup(true)}>+</button>
           <div className={styles.blogList}>
-            {apiResult.map((blog) => (
-              <div>
-                {blog.user_id == user_id && (
-                  <div key={blog.id} className={styles.blogBox}>
+          {apiResult.map((blog) => (
+              <div key={blog.id} className={styles.blogBox}>
+                <Link href={`/${blog.id}`}>
                     <h2 className={styles.blogTitle}>{blog.title}</h2>
-                    <p className={styles.blogContent}>{blog.content}</p>
-                    <p className={styles.blogContent}>{blog.user_id}</p>
-                    {blog.user_id == user_id && (
-                      <div>
-                        <button onClick={() => {
-                          setBlogBeingEdited(blog);
-                          setShowEditPopup(true);
-                        }}>
-                          Edit
-                        </button>
-                        <button onClick={() => handleDeleteBlog(blog.id)}>Delete</button>
-                      </div>
-                    )}
-                  </div>)}
+                </Link>
+                <p className={styles.blogContent}>{blog.content}</p>
+                <p className={styles.blogContent}>{blog.user_id}</p>
+                {blog.user_id == user_id && (
+                  <div>
+                    <button
+                      onClick={() => {
+                        setBlogBeingEdited(blog);
+                        setShowEditPopup(true);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button onClick={() => handleDeleteBlog(blog.id)}>Delete</button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
