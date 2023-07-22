@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
 import Layout from '../components/layout';
 
 export async function getStaticPaths() {
-  const dev = process.env.NODE_ENV !== 'production';
-  const server = dev ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_VERCEL_URL;
+  const server = 'http://localhost:3000'
 
   const res = await fetch(`${server}/api/hello`);
   const data = await res.json();
@@ -17,23 +15,25 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const dev = process.env.NODE_ENV !== 'production';
-  const server = dev ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_VERCEL_URL;
+  const server = 'http://localhost:3000'
 
   const res = await fetch(`${server}/api/hello?id=${params.id}`);
-  const blog = await res.json();
+  const data = await res.json();
+  const blog = data.blog;
 
   return { props: { blog } };
 }
 
 export default function Blog({ blog }) {
-  const router = useRouter();
-  const { id } = router.query;
-
+  if (!blog) {
+    return <div>Loading...</div>;
+  }
   return (
     <Layout>
       <h1>{blog.title}</h1>
       <p>{blog.content}</p>
+      <p>{blog.user_id}</p>
     </Layout>
   );
 }
+

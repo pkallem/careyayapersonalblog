@@ -18,6 +18,7 @@
     "Lluis Agusti <hi@llu.lu>"
   ],
   "dependencies": {
+    "@chakra-ui/react": "^2.8.0",
     "@vercel/postgres": "^0.4.0",
     "next": "latest",
     "next-auth": "latest",
