@@ -1,7 +1,5 @@
-// DeleteConfirmationPopup.tsx
-
 import React from 'react';
-import styles from '../styles/CreateBlogPopup.module.css'; // You may want to create a separate styles file for this component
+import styles from '../styles/CreateBlogPopup.module.css';
 
 interface DeleteConfirmationPopupProps {
   onClose: () => void;

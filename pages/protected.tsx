@@ -5,6 +5,7 @@ import CreateBlogPopup from '../components/CreateBlogPopup';
 import EditBlogPopup from '../components/EditBlogPopup';
 import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';  // import the new component
 import styles from '../styles/Home.module.css';
+import { Console } from 'console';
 
 interface Blog {
   id: number;

@@ -7,13 +7,13 @@ interface CreateBlogPopupProps {
 }
 
 export default function CreateBlogPopup({ onClose, onAddBlog }: CreateBlogPopupProps) {
-  const [blogTitle, setBlogTitle] = useState<string>('');
-  const [blogContent, setBlogContent] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setBlogTitle(e.target.value);
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setBlogContent(e.target.value);
-  const handleAddBlog = () => {
-    onAddBlog(blogTitle, blogContent);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+  const addBlog = () => {
+    onAddBlog(title, content);
     onClose();
   };
 
@@ -21,18 +21,9 @@ export default function CreateBlogPopup({ onClose, onAddBlog }: CreateBlogPopupP
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
         <h2 className={styles.popupHeading}>Add New Blog</h2>
-        <input
-          type="text"
-          value={blogTitle}
-          onChange={handleTitleChange}
-          placeholder="Enter the blog title"
-        />
-        <textarea
-          value={blogContent}
-          onChange={handleContentChange}
-          placeholder="Enter the blog content"
-        />
-        <button onClick={handleAddBlog}>Add Blog</button>
+        <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter the blog title" />
+        <textarea value={content} onChange={handleContentChange} placeholder="Enter the blog content" />
+        <button onClick={addBlog}>Add Blog</button>
       </div>
     </div>
   );
