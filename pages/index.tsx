@@ -1,13 +1,36 @@
+// pages/index.tsx
+
 import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 import Layout from '../components/layout';
+import { useSession } from 'next-auth/react';
 
-export default function Home() {
-  const [blogs, setBlogs] = useState([]);
+interface Blog {
+  id: number;
+  title: string;
+  content: string;
+  user_id: number;
+}
+
+interface HomeProps { }
+
+export default function Home(props: HomeProps) {
+  const { data: session, status } = useSession();
+  const [apiResult, setApiResult] = useState<Blog[]>([]);
+
+  const fetchBlogs = async () => {
+    try {
+      const response = await fetch('/api/hello');
+      const data = await response.json();
+      setApiResult(data.blogs);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    }
+  };
 
   useEffect(() => {
-    fetch('/api/hello').then(res => res.json()).then(({ blogs }) => setBlogs(blogs));
+    fetchBlogs();
   }, []);
 
   return (
@@ -15,14 +38,13 @@ export default function Home() {
       <div className={styles.container}>
         <main className={styles.main}>
           <div className={styles.blogList}>
-            {blogs.map(({ id, title, content, user_id }) => (
-              <div key={id} className={styles.blogBox}>
-                <Link href={`/${id}`}>
-                  <h2 className={styles.blogTitle}>{title}</h2>
+            {apiResult.map((blog) => (
+              <div key={blog.id} className={styles.blogBox}>
+                <Link href={`/${blog.id}`}>
+                  <h2 className={styles.blogTitle}>{blog.title}</h2>
                 </Link>
-                <p className={styles.blogContent}>{content}</p>
-                <p className={styles.blogContent}>{user_id}</p>
-                
+                <p className={styles.blogContent}>{blog.content}</p>
+                <p className={styles.blogContent}>{blog.user_id}</p>
               </div>
             ))}
           </div>

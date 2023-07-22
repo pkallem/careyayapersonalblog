@@ -1,8 +1,8 @@
-import NextAuth from "next-auth"
+import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import GithubProvider from "next-auth/providers/github"
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
       clientId: '0ae75bbfb9e3d585d72e',

@@ -3,17 +3,24 @@ import { useSession } from 'next-auth/react';
 import Layout from '../components/layout';
 import CreateBlogPopup from '../components/CreateBlogPopup';
 import EditBlogPopup from '../components/EditBlogPopup';
-import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';
+import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';  // import the new component
 import styles from '../styles/Home.module.css';
+
+interface Blog {
+  id: number;
+  title: string;
+  content: string;
+  user_id: number;
+}
 
 export default function ProtectedPage() {
   const { data: session } = useSession();
-  const [apiResult, setApiResult] = useState([]);
-  const [blogBeingEdited, setBlogBeingEdited] = useState(null);
-  const [showCreatePopup, setShowCreatePopup] = useState(false);
-  const [showEditPopup, setShowEditPopup] = useState(false);
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [blogToDelete, setBlogToDelete] = useState(null);
+  const [apiResult, setApiResult] = useState<Blog[]>([]);
+  const [blogBeingEdited, setBlogBeingEdited] = useState<Blog | null>(null);
+  const [showCreatePopup, setShowCreatePopup] = useState<boolean>(false);
+  const [showEditPopup, setShowEditPopup] = useState<boolean>(false);
+  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);  
+  const [blogToDelete, setBlogToDelete] = useState<number | null>(null);  
   const user_id = session?.user?.id;
 
   const fetchBlogs = async () => {
@@ -26,7 +33,7 @@ export default function ProtectedPage() {
     }
   };
 
-  const handleAddBlog = async (title, content) => {
+  const handleAddBlog = async (title: string, content: string) => {
     try {
       const response = await fetch('/api/hello', {
         method: 'POST',
@@ -46,12 +53,12 @@ export default function ProtectedPage() {
     }
   };
 
-  const handleDeleteBlog = (id) => {
+  const handleDeleteBlog = (id: number) => {  
     setBlogToDelete(id);
     setShowDeletePopup(true);
   };
 
-  const handleConfirmDelete = async () => {
+  const handleConfirmDelete = async () => {  
     if (blogToDelete === null) return;
 
     try {
@@ -76,7 +83,7 @@ export default function ProtectedPage() {
     }
   };
 
-  const handleEditBlog = async (id, newTitle, newContent) => {
+  const handleEditBlog = async (id: number, newTitle: string, newContent: string) => {
     try {
       const response = await fetch('/api/hello', {
         method: 'PUT',
