@@ -15,7 +15,7 @@ interface Params {
 
 export async function getStaticPaths() {
   try {
-    const res = await fetch('http://localhost:3000/api/hello');
+    const res = await fetch('https://careyayapersonalblog.vercel.app/api/hello');
     const { blogs } = await res.json();
 
     return { 
@@ -30,7 +30,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: Params) {
   try {
-    const res = await fetch(`http://localhost:3000/api/hello?id=${params.id}`);
+    const res = await fetch(`https://careyayapersonalblog.vercel.app/api/hello?id=${params.id}`);
     const { blog } = await res.json();
 
     return { props: { blog } };
