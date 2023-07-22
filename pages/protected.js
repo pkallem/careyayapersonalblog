@@ -6,21 +6,16 @@ import EditBlogPopup from '../components/EditBlogPopup';
 import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';  // import the new component
 import styles from '../styles/Home.module.css';
 
-interface Blog {
-  id: number;
-  title: string;
-  content: string;
-  user_id: number;
-}
 
 export default function ProtectedPage() {
   const { data: session } = useSession();
-  const [apiResult, setApiResult] = useState<Blog[]>([]);
-  const [blogBeingEdited, setBlogBeingEdited] = useState<Blog | null>(null);
-  const [showCreatePopup, setShowCreatePopup] = useState<boolean>(false);
-  const [showEditPopup, setShowEditPopup] = useState<boolean>(false);
-  const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);  
-  const [blogToDelete, setBlogToDelete] = useState<number | null>(null);  
+  const [apiResult, setApiResult] = useState([]);
+  
+  const [blogBeingEdited, setBlogBeingEdited] = useState(null);
+  const [showCreatePopup, setShowCreatePopup] = useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);  
+  const [blogToDelete, setBlogToDelete] = useState(null);  
   const user_id = session?.user?.id;
 
   const fetchBlogs = async () => {
@@ -33,7 +28,7 @@ export default function ProtectedPage() {
     }
   };
 
-  const handleAddBlog = async (title: string, content: string) => {
+  const handleAddBlog = async (title, content) => {
     try {
       const response = await fetch('/api/hello', {
         method: 'POST',
@@ -53,7 +48,7 @@ export default function ProtectedPage() {
     }
   };
 
-  const handleDeleteBlog = (id: number) => {  
+  const handleDeleteBlog = (id) => {  
     setBlogToDelete(id);
     setShowDeletePopup(true);
   };
@@ -83,7 +78,7 @@ export default function ProtectedPage() {
     }
   };
 
-  const handleEditBlog = async (id: number, newTitle: string, newContent: string) => {
+  const handleEditBlog = async (id, newTitle, newContent) => {
     try {
       const response = await fetch('/api/hello', {
         method: 'PUT',
