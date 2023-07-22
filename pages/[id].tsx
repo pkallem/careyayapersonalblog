@@ -7,6 +7,12 @@ interface Blog {
   user_id: number;
 }
 
+interface Params {
+  params: {
+    id: string;
+  }
+}
+
 export async function getStaticPaths() {
   try {
     const res = await fetch('http://localhost:3000/api/hello');
@@ -22,7 +28,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: Params) {
   try {
     const res = await fetch(`http://localhost:3000/api/hello?id=${params.id}`);
     const { blog } = await res.json();

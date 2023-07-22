@@ -1,6 +1,11 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
+import NextAuth, { NextAuthOptions, User, Session } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import GithubProvider from "next-auth/providers/github"
+import { JWT } from "next-auth/jwt"
+
+interface NextAuthUser extends User {
+  id: string
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -19,14 +24,12 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
+        token.id = user.id || ""; // ensure the id is never undefined
       }
       return token
     },
-    async session({session, token}){
-      if (session.user) {
-        session.user.id = token.id
-      }
+    async session({session, token}: {session: Session & {user: NextAuthUser}, token: JWT & NextAuthUser}){
+      session.user.id = token.id || ""; // ensure the id is never undefined
       return session
     },
   },
