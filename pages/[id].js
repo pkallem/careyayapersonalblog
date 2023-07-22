@@ -1,7 +1,7 @@
 import Layout from '../components/layout';
 
 export async function getStaticPaths() {
-  const server = 'http://localhost:3000'
+  const server = 'https://careyayapersonalblog.vercel.app'
 
   const res = await fetch(`${server}/api/hello`);
   const data = await res.json();
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const server = 'http://localhost:3000'
+  const server = 'https://careyayapersonalblog.vercel.app'
 
   const res = await fetch(`${server}/api/hello?id=${params.id}`);
   const data = await res.json();
