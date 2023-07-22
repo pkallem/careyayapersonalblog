@@ -1,13 +1,8 @@
-import NextAuth, { NextAuthOptions, User, Session } from "next-auth"
+import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import GithubProvider from "next-auth/providers/github"
-import { JWT } from "next-auth/jwt"
 
-interface NextAuthUser extends User {
-  id: string
-}
-
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
   providers: [
     GithubProvider({
       clientId: '0ae75bbfb9e3d585d72e',
@@ -24,12 +19,14 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id || ""; // ensure the id is never undefined
+        token.id = user.id
       }
       return token
     },
-    async session({session, token}: {session: Session & {user: NextAuthUser}, token: JWT & NextAuthUser}){
-      session.user.id = token.id || ""; // ensure the id is never undefined
+    async session({session, token}){
+      if (session.user) {
+        session.user.id = token.id
+      }
       return session
     },
   },
