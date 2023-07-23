@@ -94,7 +94,7 @@ export default function Header() {
               ) : (
                 <>
                   <IconButton ref={btnRef} colorScheme="teal" onClick={onOpen} aria-label="Options" icon={<HamburgerIcon />} />
-                  <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
+                  <Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef}>
                     <DrawerOverlay>
                       <DrawerContent>
                         <DrawerCloseButton />
