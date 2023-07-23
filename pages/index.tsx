@@ -1,4 +1,3 @@
-// pages/index.tsx
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '../components/layout';
@@ -21,7 +20,7 @@ export default function Home(props: HomeProps) {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch('/api/hello');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/hello`);
       const data = await response.json();
       setApiResult(data.blogs);
     } catch (error) {

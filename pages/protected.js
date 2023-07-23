@@ -7,7 +7,6 @@ import CreateBlogPopup from '../components/CreateBlogPopup';
 import EditBlogPopup from '../components/EditBlogPopup';
 import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';  // import the new component
 
-
 export default function ProtectedPage() {
   const { data: session } = useSession();
   const [apiResult, setApiResult] = useState([]);
@@ -22,7 +21,7 @@ export default function ProtectedPage() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch('/api/hello');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/hello`);
       const data = await response.json();
       setApiResult(data.blogs);
     } catch (error) {
