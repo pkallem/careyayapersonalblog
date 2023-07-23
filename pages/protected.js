@@ -21,7 +21,7 @@ export default function ProtectedPage() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch(`hhttps://careyayapersonalblog.vercel.app/api/hello`);
+      const response = await fetch(`https://careyayapersonalblog.vercel.app/api/hello`);
       const data = await response.json();
       setApiResult(data.blogs);
     } catch (error) {
