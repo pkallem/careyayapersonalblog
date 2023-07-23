@@ -17,6 +17,7 @@ export default function ProtectedPage() {
   const [showDeletePopup, setShowDeletePopup] = useState(false);  
   const [blogToDelete, setBlogToDelete] = useState(null);  
   const user_id = session?.user?.id;
+  const author = session?.user?.name;
 
   const fetchBlogs = async () => {
     try {
@@ -35,7 +36,7 @@ export default function ProtectedPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content, user_id }),
+        body: JSON.stringify({ title, content, user_id, author }),
       });
 
       if (!response.ok) {
@@ -85,7 +86,7 @@ export default function ProtectedPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, newTitle, newContent, user_id }),
+        body: JSON.stringify({ id, newTitle, newContent, user_id, author }),
       });
 
       if (!response.ok) {
@@ -122,7 +123,6 @@ export default function ProtectedPage() {
             blog.user_id == user_id && (
               <div key={blog.id} className={styles.blogBox}>
                 <h2 className={styles.blogTitle}>{blog.title}</h2>
-                <p className={styles.blogContent}>{blog.content}</p>
                 <button
                   onClick={() => {
                     setBlogBeingEdited(blog);

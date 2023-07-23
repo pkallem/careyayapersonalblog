@@ -11,6 +11,7 @@ interface Blog {
   title: string;
   content: string;
   user_id: number;
+  author: string;
 }
 
 interface HomeProps { }
@@ -43,8 +44,7 @@ export default function Home(props: HomeProps) {
                 <Link href={`/${blog.id}`}>
                   <h2 className={styles.blogTitle}>{blog.title}</h2>
                 </Link>
-                <p className={styles.blogContent}>{blog.content}</p>
-                <p className={styles.blogContent}>{blog.user_id}</p>
+                <p className={styles.blogContent}>{blog.author}</p>
               </div>
             ))}
           </div>

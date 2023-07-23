@@ -1,7 +1,8 @@
 import Layout from '../components/layout';
+import { Box, Heading, Text, VStack, Divider } from '@chakra-ui/react';
 
 export async function getStaticPaths() {
-  const server = 'https://careyayapersonalblog.vercel.app'
+  const server = 'http://localhost:3000'
 
   const res = await fetch(`${server}/api/hello`);
   const data = await res.json();
@@ -15,7 +16,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const server = 'https://careyayapersonalblog.vercel.app'
+  const server = 'http://localhost:3000'
 
   const res = await fetch(`${server}/api/hello?id=${params.id}`);
   const data = await res.json();
@@ -28,12 +29,15 @@ export default function Blog({ blog }) {
   if (!blog) {
     return <div>Loading...</div>;
   }
+
   return (
     <Layout>
-      <h1>{blog.title}</h1>
-      <p>{blog.content}</p>
-      <p>{blog.user_id}</p>
+      <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
+        <Heading size="lg" alignSelf="center" fontWeight="bold" mb={3}>{blog.title}</Heading>
+        <Text fontSize="lg" color="gray.500">{`Author: ${blog.author}`}</Text>
+        <Divider />
+        <Text fontSize="md" my={4} lineHeight="1.6">{blog.content}</Text>
+      </VStack>
     </Layout>
   );
 }
-
