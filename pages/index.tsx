@@ -48,9 +48,9 @@ export default function Home(props: HomeProps) {
             width="100%"
             mb={6}
           >
-            <Link href={`/${blog.id}`}>
+         
               <Heading fontSize="xl" noOfLines={4}>{blog.title}</Heading>
-            </Link>
+           
             <Text mt={4}>{blog.author}</Text>
           </Box>
         ))}
