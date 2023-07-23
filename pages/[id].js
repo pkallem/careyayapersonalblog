@@ -6,7 +6,6 @@ export default function Blog({ id }) {
   const [blog, setBlog] = useState(null);
 
   useEffect(() => {
-    // Fetch the blog data when the component mounts
     const fetchData = async () => {
       const res = await fetch(`https://careyayapersonalblog.vercel.app/api/hello?id=${id}`);
       const data = await res.json();
@@ -14,7 +13,7 @@ export default function Blog({ id }) {
     };
 
     fetchData();
-  }, [id]); // Re-fetch when the id changes
+  }, [id]);
 
   if (!blog) {
     return <div>Loading...</div>;
@@ -36,8 +35,7 @@ export default function Blog({ id }) {
   );
 }
 
-// This function gets called at build time to resolve the list of ids
+
 Blog.getInitialProps = async ({ query }) => {
-  // query.id contains the id for each rendered page
   return { id: query.id }
 }

@@ -5,7 +5,57 @@ import { Box, Button, Heading, Flex } from '@chakra-ui/react';
 import Layout from '../components/layout';
 import CreateBlogPopup from '../components/CreateBlogPopup';
 import EditBlogPopup from '../components/EditBlogPopup';
-import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';  // import the new component
+import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup'; 
+
+const performFetch = async (url, method, body) => {
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    return response;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+const BlogCard = ({ blog, onEdit, onDelete }) => (
+  <Box 
+    key={blog.id} 
+    p={5} 
+    shadow="lg" 
+    borderWidth={1} 
+    borderRadius="lg"
+    position="relative"
+    h="150px" 
+    width="80%"
+    maxWidth="700px"
+    mb={6}
+  >
+    <Heading fontSize="xl" isTruncated>{blog.title}</Heading>
+    <Flex direction="row" position="absolute" bottom="5" right="5">
+      <Button 
+        onClick={() => onEdit(blog)}
+        colorScheme="blue"
+        mr={3}
+      >
+        Edit
+      </Button>
+      <Button 
+        onClick={() => onDelete(blog.id)} 
+        colorScheme="red"
+      >
+        Delete
+      </Button>
+    </Flex>  
+  </Box>
+);
 
 export default function ProtectedPage() {
   const { data: session } = useSession();
@@ -20,33 +70,15 @@ export default function ProtectedPage() {
   const author = session?.user?.name;
 
   const fetchBlogs = async () => {
-    try {
-      const response = await fetch(`https://careyayapersonalblog.vercel.app/api/hello`);
-      const data = await response.json();
-      setApiResult(data.blogs);
-    } catch (error) {
-      console.error('Error fetching blogs:', error);
-    }
+    const response = await performFetch('https://careyayapersonalblog.vercel.app/api/hello', 'GET');
+    const data = await response.json();
+    setApiResult(data.blogs);
   };
 
   const handleAddBlog = async (title, content) => {
-    try {
-      const response = await fetch('https://careyayapersonalblog.vercel.app/api/hello', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, content, user_id, author }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      fetchBlogs();
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    await performFetch('https://careyayapersonalblog.vercel.app/api/hello', 'POST', { title, content, user_id, author });
+    fetchBlogs();
+    setShowCreatePopup(false);
   };
 
   const handleDeleteBlog = (id) => {  
@@ -57,59 +89,21 @@ export default function ProtectedPage() {
   const handleConfirmDelete = async () => {  
     if (blogToDelete === null) return;
 
-    try {
-      const response = await fetch('https://careyayapersonalblog.vercel.app/api/hello', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: blogToDelete, user_id }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      fetchBlogs();
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setBlogToDelete(null);
-      setShowDeletePopup(false);
-    }
+    await performFetch('https://careyayapersonalblog.vercel.app/api/hello', 'DELETE', { id: blogToDelete, user_id });
+    fetchBlogs();
+    setBlogToDelete(null);
+    setShowDeletePopup(false);
   };
 
   const handleEditBlog = async (id, newTitle, newContent) => {
-    try {
-      const response = await fetch('https://careyayapersonalblog.vercel.app/api/hello', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, newTitle, newContent, user_id, author }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      fetchBlogs();
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    await performFetch('https://careyayapersonalblog.vercel.app/api/hello', 'PUT', { id, newTitle, newContent, user_id, author });
+    fetchBlogs();
+    setShowEditPopup(false);
   };
 
   useEffect(() => {
     fetchBlogs();
   }, [session]);
-
-  if (!session) {
-    return (
-      <Layout>
-        <Heading>You must be logged in to view your blogs</Heading>
-      </Layout>
-    );
-  }
 
   return (
     <Layout>
@@ -120,38 +114,14 @@ export default function ProtectedPage() {
         <Button onClick={() => setShowCreatePopup(true)} colorScheme="teal" size="lg" mt={6} mb={5}>Create new blog</Button>
         {apiResult.map((blog) => (
           blog.user_id == user_id && (
-            <Box 
-              key={blog.id} 
-              p={5} 
-              shadow="lg" 
-              borderWidth={1} 
-              borderRadius="lg"
-              position="relative"
-              h="150px" 
-              width="80%"
-              maxWidth="700px"
-              mb={6}
-            >
-              <Heading fontSize="xl" isTruncated>{blog.title}</Heading>
-              <Flex direction="row" position="absolute" bottom="5" right="5">
-                <Button 
-                  onClick={() => {
-                    setBlogBeingEdited(blog);
-                    setShowEditPopup(true);
-                  }}
-                  colorScheme="blue"
-                  mr={3}
-                >
-                  Edit
-                </Button>
-                <Button 
-                  onClick={() => handleDeleteBlog(blog.id)} 
-                  colorScheme="red"
-                >
-                  Delete
-                </Button>
-              </Flex>  
-            </Box>
+            <BlogCard 
+              blog={blog} 
+              onEdit={(blog) => {
+                setBlogBeingEdited(blog);
+                setShowEditPopup(true);
+              }} 
+              onDelete={handleDeleteBlog}
+            />
           )
         ))}
       </Flex>

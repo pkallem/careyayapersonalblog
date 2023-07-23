@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '../components/layout';
 import { useSession } from 'next-auth/react';
-import { Box, Heading, Text, Grid, Flex } from '@chakra-ui/react';
+import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 
 interface Blog {
   id: number;
@@ -15,7 +15,6 @@ interface Blog {
 interface HomeProps { }
 
 export default function Home(props: HomeProps) {
-  const { data: session, status } = useSession();
   const [apiResult, setApiResult] = useState<Blog[]>([]);
 
   const fetchBlogs = async () => {
