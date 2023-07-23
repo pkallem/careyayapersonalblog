@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -15,9 +15,8 @@ interface DeleteConfirmationPopupProps {
 }
 
 export default function DeleteConfirmationPopup({ onClose, onConfirm }: DeleteConfirmationPopupProps) {
-  // You need to pass a ref to AlertDialog to manage focus
-  const cancelRef = React.useRef();
-  
+  const cancelRef = useRef<HTMLButtonElement | null>(null);
+
   return (
     <AlertDialog
       isOpen={true}
