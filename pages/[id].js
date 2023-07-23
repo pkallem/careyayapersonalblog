@@ -33,7 +33,11 @@ export default function Blog({ blog }) {
   return (
     <Layout>
       <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
-        <Heading size="lg" alignSelf="center" fontWeight="bold" mb={3}>{blog.title}</Heading>
+        <Box w="100%">
+          <Heading size="lg" alignSelf="center" fontWeight="bold" mb={3} isTruncated={false}>
+            {blog.title}
+          </Heading>
+        </Box>
         <Text fontSize="lg" color="gray.500">{`Author: ${blog.author}`}</Text>
         <Divider />
         <Text fontSize="md" my={4} lineHeight="1.6">{blog.content}</Text>

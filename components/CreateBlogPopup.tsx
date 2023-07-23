@@ -1,5 +1,18 @@
 import React, { useState } from 'react';
-import styles from '../styles/CreateBlogPopup.module.css';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  FormControl,
+  FormLabel,
+  Textarea,
+  Input
+} from "@chakra-ui/react";
 
 interface CreateBlogPopupProps {
   onClose: () => void;
@@ -12,28 +25,47 @@ export default function CreateBlogPopup({ onClose, onAddBlog }: CreateBlogPopupP
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setBlogTitle(e.target.value);
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setBlogContent(e.target.value);
+  
   const handleAddBlog = () => {
     onAddBlog(blogTitle, blogContent);
     onClose();
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
-        <h2 className={styles.popupHeading}>Add New Blog</h2>
-        <input
-          type="text"
-          value={blogTitle}
-          onChange={handleTitleChange}
-          placeholder="Enter the blog title"
-        />
-        <textarea
-          value={blogContent}
-          onChange={handleContentChange}
-          placeholder="Enter the blog content"
-        />
-        <button onClick={handleAddBlog}>Add Blog</button>
-      </div>
-    </div>
+    <Modal isOpen={true} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Add New Blog</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody pb={6}>
+          <FormControl>
+            <FormLabel>Blog Title</FormLabel>
+            <Input 
+              placeholder="Enter the blog title" 
+              value={blogTitle} 
+              onChange={handleTitleChange} 
+            />
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel>Blog Content</FormLabel>
+            <Textarea 
+              placeholder="Enter the blog content" 
+              value={blogContent} 
+              onChange={handleContentChange}
+              size="md"
+              maxHeight="150px"
+              overflowY="auto"
+            />
+          </FormControl>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={handleAddBlog}>
+            Add Blog
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }

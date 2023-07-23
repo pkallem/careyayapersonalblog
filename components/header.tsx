@@ -4,9 +4,7 @@ import styles from "../styles/header.module.css"
 
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Box, IconButton, useColorMode } from '@chakra-ui/react';
-// The approach used in this component shows how to build a sign in and sign out
-// component that works on pages which support both client and server side
-// rendering, and avoids any flash incorrect content on initial page load.
+
 export default function Header() {
   const { data: session, status } = useSession()
   const loading = status === "loading"
@@ -28,7 +26,7 @@ export default function Header() {
           {!session && (
             <>
               <span className={styles.notSignedInText}>
-                You are not signed in
+                Sign in to create your own blogs
               </span>
               <a
                 href={`/api/auth/signin`}
@@ -52,9 +50,9 @@ export default function Header() {
               )}
                             
               <span className={styles.signedInText}>
-                <small>Signed in as</small>
+                <strong>Welcome, {session.user.name}</strong>
                 <br />
-                <strong>{session.user.email ?? session.user.name}</strong>
+                <small>Signed in as {session.user.email ?? session.user.name}</small>
               </span>
               
               <a

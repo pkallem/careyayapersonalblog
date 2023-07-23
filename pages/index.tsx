@@ -1,10 +1,9 @@
 // pages/index.tsx
-
 import { useState, useEffect } from 'react';
-import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 import Layout from '../components/layout';
 import { useSession } from 'next-auth/react';
+import { Box, Heading, Text, Grid, Flex } from '@chakra-ui/react';
 
 interface Blog {
   id: number;
@@ -36,20 +35,27 @@ export default function Home(props: HomeProps) {
 
   return (
     <Layout>
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <div className={styles.blogList}>
-            {apiResult.map((blog) => (
-              <div key={blog.id} className={styles.blogBox}>
-                <Link href={`/${blog.id}`}>
-                  <h2 className={styles.blogTitle}>{blog.title}</h2>
-                </Link>
-                <p className={styles.blogContent}>{blog.author}</p>
-              </div>
-            ))}
-          </div>
-        </main>
-      </div>
+      <Flex direction="column" align="start" width="80%" maxWidth="700px" m="0 auto">
+        <Heading as="h1" size="2xl" mt={6} mb={6}>Feed</Heading>
+        {apiResult.map((blog) => (
+          <Box 
+            key={blog.id} 
+            p={5} 
+            shadow="lg" 
+            borderWidth={1} 
+            borderRadius="lg"
+            overflow="auto"
+            h="200px" 
+            width="100%"
+            mb={6}
+          >
+            <Link href={`/${blog.id}`}>
+              <Heading fontSize="xl" noOfLines={4}>{blog.title}</Heading>
+            </Link>
+            <Text mt={4}>{blog.author}</Text>
+          </Box>
+        ))}
+      </Flex>
     </Layout>
   );
 }

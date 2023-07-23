@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { Box, Button, Heading, Flex } from '@chakra-ui/react';
+
 import Layout from '../components/layout';
 import CreateBlogPopup from '../components/CreateBlogPopup';
 import EditBlogPopup from '../components/EditBlogPopup';
 import DeleteConfirmationPopup from '../components/DeleteConfirmationPopup';  // import the new component
-import styles from '../styles/Home.module.css';
 
 
 export default function ProtectedPage() {
@@ -106,37 +107,55 @@ export default function ProtectedPage() {
   if (!session) {
     return (
       <Layout>
-        <h1>You must be logged in to view your blogs</h1>
+        <Heading>You must be logged in to view your blogs</Heading>
       </Layout>
     );
   }
 
   return (
     <Layout>
-      <div className={styles.container}>
-        <main className={styles.main}>
-          {showCreatePopup && <CreateBlogPopup onClose={() => setShowCreatePopup(false)} onAddBlog={handleAddBlog} />}
-          {showEditPopup && blogBeingEdited && <EditBlogPopup blog={blogBeingEdited} onClose={() => setShowEditPopup(false)} onEditBlog={handleEditBlog} />}
-          {showDeletePopup && <DeleteConfirmationPopup onClose={() => setShowDeletePopup(false)} onConfirm={handleConfirmDelete} />}  
-          <button onClick={() => setShowCreatePopup(true)}>+</button>
-          {apiResult.map((blog) => (
-            blog.user_id == user_id && (
-              <div key={blog.id} className={styles.blogBox}>
-                <h2 className={styles.blogTitle}>{blog.title}</h2>
-                <button
+      <Flex direction="column" align="center">
+        {showCreatePopup && <CreateBlogPopup onClose={() => setShowCreatePopup(false)} onAddBlog={handleAddBlog} />}
+        {showEditPopup && blogBeingEdited && <EditBlogPopup blog={blogBeingEdited} onClose={() => setShowEditPopup(false)} onEditBlog={handleEditBlog} />}
+        {showDeletePopup && <DeleteConfirmationPopup onClose={() => setShowDeletePopup(false)} onConfirm={handleConfirmDelete} />}  
+        <Button onClick={() => setShowCreatePopup(true)} colorScheme="teal" size="lg" mt={6} mb={5}>Create new blog</Button>
+        {apiResult.map((blog) => (
+          blog.user_id == user_id && (
+            <Box 
+              key={blog.id} 
+              p={5} 
+              shadow="lg" 
+              borderWidth={1} 
+              borderRadius="lg"
+              position="relative"
+              h="150px" 
+              width="80%"
+              maxWidth="700px"
+              mb={6}
+            >
+              <Heading fontSize="xl" isTruncated>{blog.title}</Heading>
+              <Flex direction="row" position="absolute" bottom="5" right="5">
+                <Button 
                   onClick={() => {
                     setBlogBeingEdited(blog);
                     setShowEditPopup(true);
                   }}
+                  colorScheme="blue"
+                  mr={3}
                 >
                   Edit
-                </button>
-                <button onClick={() => handleDeleteBlog(blog.id)}>Delete</button>  
-              </div>
-            )
-          ))}
-        </main>
-      </div>
+                </Button>
+                <Button 
+                  onClick={() => handleDeleteBlog(blog.id)} 
+                  colorScheme="red"
+                >
+                  Delete
+                </Button>
+              </Flex>  
+            </Box>
+          )
+        ))}
+      </Flex>
     </Layout>
   );
 }

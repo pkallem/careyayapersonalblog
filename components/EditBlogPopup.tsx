@@ -1,5 +1,18 @@
 import React, { useState } from 'react';
-import styles from '../styles/CreateBlogPopup.module.css';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  FormControl,
+  FormLabel,
+  Textarea,
+  Input
+} from "@chakra-ui/react";
 
 interface Blog {
   id: number;
@@ -25,22 +38,40 @@ export default function EditBlogPopup({ blog, onClose, onEditBlog }: EditBlogPop
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
-        <h2 className={styles.popupHeading}>Edit Blog</h2>
-        <input
-          type="text"
-          value={newTitle}
-          onChange={handleTitleChange}
-          placeholder="Edit the blog title"
-        />
-        <textarea
-          value={newContent}
-          onChange={handleContentChange}
-          placeholder="Edit the blog content"
-        />
-        <button onClick={handleEditBlog}>Save Changes</button>
-      </div>
-    </div>
+    <Modal isOpen={true} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Edit Blog</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody pb={6}>
+          <FormControl>
+            <FormLabel>Blog Title</FormLabel>
+            <Input 
+              placeholder="Edit the blog title" 
+              value={newTitle} 
+              onChange={handleTitleChange} 
+            />
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel>Blog Content</FormLabel>
+            <Textarea 
+              placeholder="Edit the blog content" 
+              value={newContent} 
+              onChange={handleContentChange}
+              size="md"
+              maxH="150px"
+              overflowY="auto"
+            />
+          </FormControl>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={handleEditBlog}>
+            Save Changes
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }
