@@ -31,7 +31,7 @@ export default function ProtectedPage() {
 
   const handleAddBlog = async (title, content) => {
     try {
-      const response = await fetch('/api/hello', {
+      const response = await fetch('https://careyayapersonalblog-git-main-pkallem.vercel.app/api/hello', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export default function ProtectedPage() {
     if (blogToDelete === null) return;
 
     try {
-      const response = await fetch('/api/hello', {
+      const response = await fetch('https://careyayapersonalblog-git-main-pkallem.vercel.app/api/hello', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export default function ProtectedPage() {
 
   const handleEditBlog = async (id, newTitle, newContent) => {
     try {
-      const response = await fetch('/api/hello', {
+      const response = await fetch('https://careyayapersonalblog-git-main-pkallem.vercel.app/api/hello', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
