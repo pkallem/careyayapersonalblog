@@ -5,11 +5,9 @@ export async function getStaticPaths() {
   const res = await fetch(`https://careyayapersonalblog-git-main-pkallem.vercel.app/api/hello`);
   const data = await res.json();
   const blogs = data.blogs;
-
   const paths = blogs.map((blog) => ({
     params: { id: blog.id.toString() },
   }));
-
   return { paths, fallback: false };
 }
 
