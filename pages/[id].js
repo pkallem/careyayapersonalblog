@@ -2,7 +2,7 @@ import Layout from '../components/layout';
 import { Box, Heading, Text, VStack, Divider } from '@chakra-ui/react';
 
 export async function getStaticPaths() {
-  const res = await fetch(`https://careyayapersonalblog-git-main-pkallem.vercel.app/api/hello`);
+  const res = await fetch(`https://careyayapersonalblog.vercel.app/api/hello`);
   const data = await res.json();
   const blogs = data.blogs;
   const paths = blogs.map((blog) => ({
@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`https://careyayapersonalblog-git-main-pkallem.vercel.app/api/hello?id=${params.id}`);
+  const res = await fetch(`https://careyayapersonalblog.vercel.app/api/hello?id=${params.id}`);
   const data = await res.json();
   const blog = data.blog;
 

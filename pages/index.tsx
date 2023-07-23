@@ -20,7 +20,7 @@ export default function Home(props: HomeProps) {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch(`https://careyayapersonalblog-git-main-pkallem.vercel.app/api/hello`);
+      const response = await fetch(`https://careyayapersonalblog.vercel.app/api/hello`);
       const data = await response.json();
       setApiResult(data.blogs);
     } catch (error) {
