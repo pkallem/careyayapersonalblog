@@ -29,7 +29,7 @@ export default function Header() {
                 Sign in to create your own blogs
               </span>
               <a
-                href={`/api/auth/signin`}
+                href={`https://careyayapersonalblog-git-main-pkallem.vercel.app/api/auth/signin`}
                 className={styles.buttonPrimary}
                 onClick={(e) => {
                   e.preventDefault()
@@ -56,7 +56,7 @@ export default function Header() {
               </span>
               
               <a
-                href={`/api/auth/signout`}
+                href={`https://careyayapersonalblog-git-main-pkallem.vercel.app/api/auth/signout`}
                 className={styles.button}
                 onClick={(e) => {
                   e.preventDefault()
@@ -67,14 +67,14 @@ export default function Header() {
               </a>
 
               <a
-                href={`/protected`}
+                href={`https://careyayapersonalblog-git-main-pkallem.vercel.app/protected`}
                 className={styles.button}
                 
               >
                 My Blogs
               </a>
               <a
-                href={`/`}
+                href={`https://careyayapersonalblog-git-main-pkallem.vercel.app/`}
                 className={styles.button}
                 
               >
