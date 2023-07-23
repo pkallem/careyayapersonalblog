@@ -21,7 +21,7 @@ export default function ProtectedPage() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/hello`);
+      const response = await fetch(`https://careyayapersonalblog-git-main-pkallem.vercel.app/api/hello`);
       const data = await response.json();
       setApiResult(data.blogs);
     } catch (error) {
