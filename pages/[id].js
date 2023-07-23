@@ -1,25 +1,21 @@
 import Layout from '../components/layout';
 import { Box, Heading, Text, VStack, Divider } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
-export async function getStaticPaths() {
-  const res = await fetch(`https://careyayapersonalblog.vercel.app/api/hello`);
-  const data = await res.json();
-  const blogs = data.blogs;
-  const paths = blogs.map((blog) => ({
-    params: { id: blog.id.toString() },
-  }));
-  return { paths, fallback: false };
-}
+export default function Blog({ id }) {
+  const [blog, setBlog] = useState(null);
 
-export async function getStaticProps({ params }) {
-  const res = await fetch(`https://careyayapersonalblog.vercel.app/api/hello?id=${params.id}`);
-  const data = await res.json();
-  const blog = data.blog;
+  useEffect(() => {
+    // Fetch the blog data when the component mounts
+    const fetchData = async () => {
+      const res = await fetch(`https://careyayapersonalblog.vercel.app/api/hello?id=${id}`);
+      const data = await res.json();
+      setBlog(data.blog);
+    };
 
-  return { props: { blog } };
-}
+    fetchData();
+  }, [id]); // Re-fetch when the id changes
 
-export default function Blog({ blog }) {
   if (!blog) {
     return <div>Loading...</div>;
   }
@@ -38,4 +34,10 @@ export default function Blog({ blog }) {
       </VStack>
     </Layout>
   );
+}
+
+// This function gets called at build time to resolve the list of ids
+Blog.getInitialProps = async ({ query }) => {
+  // query.id contains the id for each rendered page
+  return { id: query.id }
 }
