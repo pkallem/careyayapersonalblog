@@ -1,18 +1,21 @@
-import Link from "next/link"
-import { signIn, signOut, useSession } from "next-auth/react"
-import styles from "../styles/header.module.css"
+import { useRef } from 'react';
+import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
+import styles from "../styles/header.module.css";
 
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { Box, IconButton, useColorMode } from '@chakra-ui/react';
+import { MoonIcon, SunIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { Box, IconButton, useColorMode, useDisclosure, useMediaQuery, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Button } from '@chakra-ui/react';
 
 export default function Header() {
-  const { data: session, status } = useSession()
-  const loading = status === "loading"
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
+  const btnRef = useRef(null);
+
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
   const { colorMode, toggleColorMode } = useColorMode();
 
-
   return (
-    
     <header>
       <noscript>
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
@@ -25,19 +28,38 @@ export default function Header() {
         >
           {!session && (
             <>
-              <span className={styles.notSignedInText}>
-                Sign in to create your own blogs
-              </span>
-              <a
-                href={`https://careyayapersonalblog.vercel.app/api/auth/signin`}
-                className={styles.buttonPrimary}
-                onClick={(e) => {
-                  e.preventDefault()
-                  signIn()
-                }}
-              >
-                Sign in
-              </a>
+              {isLargerThan768 ? (
+                <>
+                  <span className={styles.notSignedInText}>
+                    Sign in to create your own blogs
+                  </span>
+                  <a
+                    href="#"
+                    className={styles.buttonPrimary}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      signIn();
+                    }}
+                  >
+                    Sign in
+                  </a>
+                </>
+              ) : (
+                <>
+                  <IconButton ref={btnRef} colorScheme="teal" onClick={onOpen} aria-label="Options" icon={<HamburgerIcon />} />
+                  <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
+                    <DrawerOverlay>
+                      <DrawerContent>
+                        <DrawerCloseButton />
+                        <DrawerHeader>Menu</DrawerHeader>
+                        <DrawerBody>
+                          <Button onClick={(e) => { e.preventDefault(); signIn(); }}>Sign In</Button>
+                        </DrawerBody>
+                      </DrawerContent>
+                    </DrawerOverlay>
+                  </Drawer>
+                </>
+              )}
             </>
           )}
           {session?.user && (
@@ -48,38 +70,38 @@ export default function Header() {
                   className={styles.avatar}
                 />
               )}
-                            
+
               <span className={styles.signedInText}>
                 <strong>Welcome, {session.user.name}</strong>
                 <br />
                 <small>Signed in as {session.user.email ?? session.user.name}</small>
               </span>
-              
+
               <a
-                href={`https://careyayapersonalblog.vercel.app/api/auth/signout`}
+                href="#"
                 className={styles.button}
                 onClick={(e) => {
-                  e.preventDefault()
-                  signOut()
+                  e.preventDefault();
+                  signOut();
                 }}
               >
                 Sign out
               </a>
 
               <a
-                href={`https://careyayapersonalblog.vercel.app/protected`}
+                href="/protected"
                 className={styles.button}
-                
               >
                 My Blogs
               </a>
+
               <a
-                href={`https://careyayapersonalblog.vercel.app`}
+                href="/"
                 className={styles.button}
-                
               >
                 Feed
               </a>
+
               <IconButton
                 aria-label="Toggle dark mode"
                 icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
@@ -87,14 +109,10 @@ export default function Header() {
                 className={styles.button}
                 right={5}
               />
-
             </>
-            
           )}
         </p>
       </div>
-
     </header>
-    
   )
 }
