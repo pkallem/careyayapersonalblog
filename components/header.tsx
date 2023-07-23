@@ -21,79 +21,88 @@ export default function Header() {
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
       <Flex justifyContent="space-between" alignItems="center" className={styles.signedInStatus}>
-        <p
-          className={`nojs-show ${
-            !session && loading ? styles.loading : styles.loaded
-          }`}
-        >
-          {!session && (
+        <Box flex="1">
+          <p
+            className={`nojs-show ${
+              !session && loading ? styles.loading : styles.loaded
+            }`}
+          >
+            {!session && (
+              <>
+                <span className={styles.notSignedInText}>
+                  Sign in to create your own blogs
+                </span>
+                <a
+                  href={`https://careyayapersonalblog.vercel.app/api/auth/signin`}
+                  className={styles.buttonPrimary}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signIn();
+                  }}
+                >
+                  Sign in
+                </a>
+              </>
+            )}
+            {session?.user && (
+              <>
+                {session.user.image && isLargerThan768 && (
+                  <span
+                    style={{ backgroundImage: `url('${session.user.image}')` }}
+                    className={styles.avatar}
+                  />
+                )}
+
+                <span className={styles.signedInText}>
+                  <strong>Welcome, {session.user.name}</strong>
+                  <br />
+                  {isLargerThan768 && 
+                    <small>Signed in as {session.user.email ?? session.user.name}</small>
+                  }
+                </span>
+              </>
+            )}
+          </p>
+        </Box>
+        <Box flex="1" textAlign="center">
+          {isLargerThan768 && session?.user && (
             <>
-              <span className={styles.notSignedInText}>
-                Sign in to create your own blogs
-              </span>
               <a
-                href={`https://careyayapersonalblog.vercel.app/api/auth/signin`}
-                className={styles.buttonPrimary}
+                href={`https://careyayapersonalblog.vercel.app/api/auth/signout`}
+                className={styles.button}
                 onClick={(e) => {
                   e.preventDefault();
-                  signIn();
+                  signOut();
                 }}
               >
-                Sign in
+                Sign out
+              </a>
+
+              <a
+                href={`https://careyayapersonalblog.vercel.app/protected`}
+                className={styles.button}
+              >
+                My Blogs
+              </a>
+              <a
+                href={`https://careyayapersonalblog.vercel.app`}
+                className={styles.button}
+              >
+                Feed
               </a>
             </>
           )}
+        </Box>
+        <Box flex="1" textAlign="right">
           {session?.user && (
             <>
-              {session.user.image && isLargerThan768 && (
-                <span
-                  style={{ backgroundImage: `url('${session.user.image}')` }}
-                  className={styles.avatar}
-                />
-              )}
-
-              <span className={styles.signedInText}>
-                <strong>Welcome, {session.user.name}</strong>
-                <br />
-                {isLargerThan768 && 
-                  <small>Signed in as {session.user.email ?? session.user.name}</small>
-                }
-              </span>
-
-              {isLargerThan768 ? (
-                <>
-                  <a
-                    href={`https://careyayapersonalblog.vercel.app/api/auth/signout`}
-                    className={styles.button}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      signOut();
-                    }}
-                  >
-                    Sign out
-                  </a>
-
-                  <a
-                    href={`https://careyayapersonalblog.vercel.app/protected`}
-                    className={styles.button}
-                  >
-                    My Blogs
-                  </a>
-                  <a
-                    href={`https://careyayapersonalblog.vercel.app`}
-                    className={styles.button}
-                  >
-                    Feed
-                  </a>
-                  <IconButton
-                    aria-label="Toggle dark mode"
-                    icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
-                    onClick={toggleColorMode}
-                    className={styles.button}
-                    right={5}
-                  />
-                </>
-              ) : (
+              <IconButton
+                aria-label="Toggle dark mode"
+                icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+                onClick={toggleColorMode}
+                className={styles.button}
+              />
+              {!isLargerThan768 && (
                 <>
                   <IconButton ref={btnRef} colorScheme="teal" onClick={onOpen} aria-label="Options" icon={<HamburgerIcon />} />
                   <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
@@ -120,7 +129,7 @@ export default function Header() {
               )}
             </>
           )}
-        </p>
+        </Box>
       </Flex>
     </header>
   )
