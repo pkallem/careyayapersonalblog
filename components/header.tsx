@@ -101,14 +101,14 @@ export default function Header() {
                         <DrawerHeader>Welcome, {session.user.name}</DrawerHeader>
                         <DrawerBody>
                           <VStack spacing={4}>
-                            <Button onClick={(e) => { e.preventDefault(); signOut(); }}>Sign Out</Button>
-                            <Link href="/protected">
-                              <Button>My Blogs</Button>
-                            </Link>
                             <Link href="/">
                               <Button>Feed</Button>
                             </Link>
+                            <Link href="/protected">
+                              <Button>My Blogs</Button>
+                            </Link>
                             <Button onClick={toggleColorMode}>{colorMode === 'dark' ? 'Light Mode' : 'Dark Mode'}</Button>
+                            <Button onClick={(e) => { e.preventDefault(); signOut(); }}>Sign Out</Button>
                           </VStack>
                         </DrawerBody>
                       </DrawerContent>
