@@ -4,7 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "../styles/header.module.css";
 
 import { MoonIcon, SunIcon, HamburgerIcon } from '@chakra-ui/icons';
-import { Box, IconButton, useColorMode, useDisclosure, useMediaQuery, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Button } from '@chakra-ui/react';
+import { Box, IconButton, useColorMode, useDisclosure, useMediaQuery, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Button, VStack } from '@chakra-ui/react';
 
 export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,38 +28,19 @@ export default function Header() {
         >
           {!session && (
             <>
-              {isLargerThan768 ? (
-                <>
-                  <span className={styles.notSignedInText}>
-                    Sign in to create your own blogs
-                  </span>
-                  <a
-                    href="#"
-                    className={styles.buttonPrimary}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      signIn();
-                    }}
-                  >
-                    Sign in
-                  </a>
-                </>
-              ) : (
-                <>
-                  <IconButton ref={btnRef} colorScheme="teal" onClick={onOpen} aria-label="Options" icon={<HamburgerIcon />} />
-                  <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
-                    <DrawerOverlay>
-                      <DrawerContent>
-                        <DrawerCloseButton />
-                        <DrawerHeader>Menu</DrawerHeader>
-                        <DrawerBody>
-                          <Button onClick={(e) => { e.preventDefault(); signIn(); }}>Sign In</Button>
-                        </DrawerBody>
-                      </DrawerContent>
-                    </DrawerOverlay>
-                  </Drawer>
-                </>
-              )}
+              <span className={styles.notSignedInText}>
+                Sign in to create your own blogs
+              </span>
+              <a
+                href={`https://careyayapersonalblog.vercel.app/api/auth/signin`}
+                className={styles.buttonPrimary}
+                onClick={(e) => {
+                  e.preventDefault();
+                  signIn();
+                }}
+              >
+                Sign in
+              </a>
             </>
           )}
           {session?.user && (
@@ -77,38 +58,64 @@ export default function Header() {
                 <small>Signed in as {session.user.email ?? session.user.name}</small>
               </span>
 
-              <a
-                href="#"
-                className={styles.button}
-                onClick={(e) => {
-                  e.preventDefault();
-                  signOut();
-                }}
-              >
-                Sign out
-              </a>
+              {isLargerThan768 ? (
+                <>
+                  <a
+                    href={`https://careyayapersonalblog.vercel.app/api/auth/signout`}
+                    className={styles.button}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      signOut();
+                    }}
+                  >
+                    Sign out
+                  </a>
 
-              <a
-                href="/protected"
-                className={styles.button}
-              >
-                My Blogs
-              </a>
-
-              <a
-                href="/"
-                className={styles.button}
-              >
-                Feed
-              </a>
-
-              <IconButton
-                aria-label="Toggle dark mode"
-                icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
-                onClick={toggleColorMode}
-                className={styles.button}
-                right={5}
-              />
+                  <a
+                    href={`https://careyayapersonalblog.vercel.app/protected`}
+                    className={styles.button}
+                  >
+                    My Blogs
+                  </a>
+                  <a
+                    href={`https://careyayapersonalblog.vercel.app`}
+                    className={styles.button}
+                  >
+                    Feed
+                  </a>
+                  <IconButton
+                    aria-label="Toggle dark mode"
+                    icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+                    onClick={toggleColorMode}
+                    className={styles.button}
+                    right={5}
+                  />
+                </>
+              ) : (
+                <>
+                  <IconButton ref={btnRef} colorScheme="teal" onClick={onOpen} aria-label="Options" icon={<HamburgerIcon />} />
+                  <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
+                    <DrawerOverlay>
+                      <DrawerContent>
+                        <DrawerCloseButton />
+                        <DrawerHeader>Welcome, {session.user.name}</DrawerHeader>
+                        <DrawerBody>
+                          <VStack spacing={4}>
+                            <Button onClick={(e) => { e.preventDefault(); signOut(); }}>Sign Out</Button>
+                            <Link href="/protected">
+                              <Button>My Blogs</Button>
+                            </Link>
+                            <Link href="/">
+                              <Button>Feed</Button>
+                            </Link>
+                            <Button onClick={toggleColorMode}>{colorMode === 'dark' ? 'Light Mode' : 'Dark Mode'}</Button>
+                          </VStack>
+                        </DrawerBody>
+                      </DrawerContent>
+                    </DrawerOverlay>
+                  </Drawer>
+                </>
+              )}
             </>
           )}
         </p>
