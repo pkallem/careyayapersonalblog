@@ -7,7 +7,7 @@ export default function Blog({ id }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`https://careyayapersonalblog.vercel.app/api/hello?id=${id}`);
+      const res = await fetch(`http://careyayapersonalblog.vercel.app/api/hello?id=${id}`);
       const data = await res.json();
       setBlog(data.blog);
     };
