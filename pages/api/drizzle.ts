@@ -13,6 +13,7 @@ export const userblogs = pgTable("userblogs", {
 export const userinfo = pgTable("userinfo", {
     user_id: integer("user_id").primaryKey(),
     bio: text("bio"),
+    resume_link: text("resume_link")
 })
 
 export const db = drizzle(sql);
