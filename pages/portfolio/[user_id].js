@@ -24,7 +24,7 @@ export default function Portfolio({ user_id }) {
       <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
         <Box w="100%">
           <Heading size="lg" alignSelf="center" fontWeight="bold" mb={3} isTruncated={false}>
-            {user.name}'s Portfolio
+            {user.bio}
           </Heading>
         </Box>
         <Image boxSize="100px" src={user.image} alt={user.name} />
