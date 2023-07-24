@@ -5,6 +5,11 @@ import styles from "../styles/header.module.css";
 
 import { MoonIcon, SunIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { Box, IconButton, useColorMode, useDisclosure, useMediaQuery, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Button, VStack } from '@chakra-ui/react';
+import { User } from 'next-auth';
+
+interface MyUser extends User {
+  id: string;
+}
 
 export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -14,8 +19,10 @@ export default function Header() {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const { colorMode, toggleColorMode } = useColorMode();
-  const user_id = session?.user?.id;
 
+  const user = session?.user as MyUser;
+  const user_id = user.id;
+  
   return (
     <header>
       <noscript>
