@@ -14,6 +14,7 @@ export default function Header() {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const { colorMode, toggleColorMode } = useColorMode();
+  const user_id = session?.user?.id;
 
   return (
     <header>
@@ -70,7 +71,12 @@ export default function Header() {
                   >
                     Sign out
                   </a>
-
+                  <a
+                    href={`https://careyayapersonalblog.vercel.app/users/${user_id}`}
+                    className={styles.button}
+                  >
+                    Portfolio
+                  </a>
                   <a
                     href={`https://careyayapersonalblog.vercel.app/protected`}
                     className={styles.button}
