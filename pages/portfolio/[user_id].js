@@ -51,14 +51,6 @@ export default function Portfolio({ user_id, author }) {
           </Heading>
         </Box>
         <Divider />
-        <Box w="100%" my={4}>
-          <Heading size="md" fontWeight="bold" mb={3}>Bio:</Heading>
-          <Text fontSize="md" lineHeight="1.6">{bio}</Text>
-        </Box>
-        <Box w="100%" position="relative" style={{paddingBottom: '77.34375%'}}>
-          <Heading size="md" fontWeight="bold" mb={3}>Resume/CV:</Heading>
-          <iframe src={resumeLink} title="Resume" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
-        </Box>
         {session && session.user.id === user_id && (
           <Box w="100%" mb={8}>
             <Button colorScheme="teal" onClick={() => setEdit(!edit)}>Edit</Button>
@@ -72,6 +64,15 @@ export default function Portfolio({ user_id, author }) {
             )}
           </Box>
         )}
+        <Box w="100%" my={4}>
+          <Heading size="md" fontWeight="bold" mb={3}>About Me</Heading>
+          <Text fontSize="md" lineHeight="1.6">{bio}</Text>
+        </Box>
+        <Heading size="md" fontWeight="bold" mb={3}>Resume/CV:</Heading>
+        <Box w="100%" position="relative" style={{paddingBottom: '77.34375%'}}>
+          <iframe src={resumeLink} title="Resume" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+        </Box>
+        
       </VStack>
     </Layout>
   );
