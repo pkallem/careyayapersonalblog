@@ -20,6 +20,7 @@ export default async function handler(request, response) {
       }
       
       const newUser = await db.insertInto(userinfo).values({ user_id, bio, resume_link }).execute();
+      console.log("hello");
       console.log(newUser);
       if (!newUser) {
         return response.status(500).json({ error: 'Could not create user.' });
