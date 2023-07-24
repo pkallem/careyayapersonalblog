@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "../styles/header.module.css";
