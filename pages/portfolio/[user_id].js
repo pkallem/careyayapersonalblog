@@ -1,11 +1,8 @@
-import { useSession } from 'next-auth/react';
 import Layout from '../../components/layout';
-import { Box, Heading, Image, VStack, Divider, Textarea, Button, Input } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Divider, Image, Textarea, Button, Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 export default function Portfolio({ user_id }) {
-  const { data: session } = useSession();
-  const loggedInUserId = session?.user?.id;
   const [user, setUser] = useState(null);
   const [bio, setBio] = useState('');
   const [resumeLink, setResumeLink] = useState('');
@@ -43,24 +40,28 @@ export default function Portfolio({ user_id }) {
 
   return (
     <Layout>
-      <Heading>{user.user_id}</Heading>
-      <Box>{user.bio}</Box>
-      <Box>
-        <iframe src={resumeLink} title="Resume"></iframe>
-      </Box>
-      <Divider mt={5} mb={5} />
-      {
-        session && loggedInUserId == user.user_id ? (
-          <Box>
-            <Heading mb={3}>Update Your Info:</Heading>
-            <VStack spacing={3}>
-              <Textarea placeholder="Update your bio" value={bio} onChange={(e) => setBio(e.target.value)} />
-              <Input placeholder="Update your resume link" value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} />
-              <Button colorScheme="teal" onClick={updateUserInfo}>Update</Button>
-            </VStack>
-          </Box>
-        ) : null
-      }
+      <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
+        <Box w="100%">
+          <Heading size="lg" alignSelf="center" fontWeight="bold" mb={3}>
+            {user.user_id}
+          </Heading>
+        </Box>
+        <Divider />
+        <Box w="100%" my={4}>
+          <Text fontSize="md" lineHeight="1.6">{bio}</Text>
+        </Box>
+        <Box w="100%">
+          <iframe src={resumeLink} title="Resume" style={{ width: '100%', height: '600px' }} />
+        </Box>
+        <Box w="100%">
+          <Heading size="md" fontWeight="bold" mb={3}>Update Your Info:</Heading>
+          <VStack spacing={3}>
+            <Textarea placeholder="Update your bio" value={bio} onChange={(e) => setBio(e.target.value)} />
+            <Input placeholder="Update your resume link" value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} />
+            <Button colorScheme="teal" onClick={updateUserInfo}>Update</Button>
+          </VStack>
+        </Box>
+      </VStack>
     </Layout>
   );
 }
