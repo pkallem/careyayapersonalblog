@@ -79,12 +79,6 @@ export default function Header() {
                     Sign out
                   </a>
                   <a
-                    href={`https://careyayapersonalblog.vercel.app/users/${user_id}`}
-                    className={styles.button}
-                  >
-                    Portfolio
-                  </a>
-                  <a
                     href={`https://careyayapersonalblog.vercel.app/protected`}
                     className={styles.button}
                   >
