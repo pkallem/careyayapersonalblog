@@ -1,6 +1,7 @@
 import Layout from '../components/layout';
 import { Box, Heading, Text, VStack, Divider } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function Blog({ id }) {
   const [blog, setBlog] = useState(null);
@@ -27,14 +28,15 @@ export default function Blog({ id }) {
             {blog.title}
           </Heading>
         </Box>
-        <Text fontSize="lg" color="gray.500">{`Author: ${blog.author}`}</Text>
+        <Link href={`/portfolio/${blog.user_id}`}>
+          <Text fontSize="lg" color="gray.500" cursor="pointer">{`Author: ${blog.author}`}</Text>
+        </Link>
         <Divider />
         <Text fontSize="md" my={4} lineHeight="1.6">{blog.content}</Text>
       </VStack>
     </Layout>
   );
 }
-
 
 Blog.getInitialProps = async ({ query }) => {
   return { id: query.id }
