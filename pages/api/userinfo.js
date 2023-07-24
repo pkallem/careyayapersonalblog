@@ -24,7 +24,7 @@ export default async function handler(request, response) {
         return response.status(400).json({ error: 'user_id, bio and resume_link fields are required.' });
       }
       
-      const newUser = await db.insertInto(userinfo).values({ user_id, bio, resume_link }).execute();
+      const newUser = await db.insert(userinfo).values({ user_id, bio, resume_link }).execute();
       if (!newUser) {
         return response.status(500).json({ error: 'Could not create user.' });
       }
