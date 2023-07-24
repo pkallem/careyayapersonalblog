@@ -13,6 +13,19 @@ export default async function handler(request, response) {
       }
       await db.update(userinfo).set({bio: bio, resume_link: resume_link}).where(eq(userinfo.user_id, user_id));
       return response.status(200).json({ message: 'User info updated.' });
+    } else if (request.method === 'POST') {
+      const { user_id, bio, resume_link } = request.body;
+      if (!user_id || !bio || !resume_link) {
+        return response.status(400).json({ error: 'user_id, bio and resume_link fields are required.' });
+      }
+      
+      const newUser = await db.insertInto(userinfo).values({ user_id, bio, resume_link }).execute();
+      
+      if (!newUser) {
+        return response.status(500).json({ error: 'Could not create user.' });
+      }
+
+      return response.status(200).json({ message: 'User info created.' });
     } else {
       response.status(405).json({ error: 'Invalid request method' });
     }
