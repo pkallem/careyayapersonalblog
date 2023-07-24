@@ -1,4 +1,4 @@
-import Layout from '../components/layout';
+import Layout from '../../components/layout';
 import { Box, Heading, Image, VStack, Divider, Textarea, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
