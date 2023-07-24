@@ -16,14 +16,11 @@ export default async function handler(request, response) {
     } else if (request.method === 'POST') {
       const { user_id, bio, resume_link } = request.body;
       if (!user_id || !bio || !resume_link) {
-        console.log(user_id);
-        console.log(bio);
-        console.log(resume_link);
         return response.status(400).json({ error: 'user_id, bio and resume_link fields are required.' });
       }
       
       const newUser = await db.insertInto(userinfo).values({ user_id, bio, resume_link }).execute();
-      
+      console.log(newUser);
       if (!newUser) {
         return response.status(500).json({ error: 'Could not create user.' });
       }
@@ -33,6 +30,7 @@ export default async function handler(request, response) {
       response.status(405).json({ error: 'Invalid request method' });
     }
   } catch (error) {
+    console.log(error)
     return response.status(500).json({ error });
   }
 }
