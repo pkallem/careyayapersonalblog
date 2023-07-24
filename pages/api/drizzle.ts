@@ -1,4 +1,4 @@
-import {pgTable, serial, text, varchar, integer} from "drizzle-orm/pg-core"
+import {pgTable, serial, text, varchar, integer, primaryKey} from "drizzle-orm/pg-core"
 import { sql } from "@vercel/postgres";
 import { drizzle } from "drizzle-orm/vercel-postgres";
 
@@ -10,5 +10,9 @@ export const userblogs = pgTable("userblogs", {
     author: varchar("author")
 })
 
-export const db = drizzle(sql);
+export const userinfo = pgTable("userinfo", {
+    user_id: integer("user_id").primaryKey(),
+    bio: text("bio"),
+})
 
+export const db = drizzle(sql);
