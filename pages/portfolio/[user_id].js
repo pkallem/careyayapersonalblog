@@ -9,7 +9,8 @@ export default function Portfolio({ user_id }) {
     const fetchData = async () => {
       const res = await fetch(`https://careyayapersonalblog.vercel.app/api/userinfo?user_id=${user_id}`);
       const data = await res.json();
-      console.log(data);
+      console.log(data.rows.bio);
+      console.log(data.bio);
       setUser(data);
     };
 
@@ -25,7 +26,7 @@ export default function Portfolio({ user_id }) {
       <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
         <Box w="100%">
           <Heading size="lg" alignSelf="center" fontWeight="bold" mb={3} isTruncated={false}>
-            {user.bio}
+            
           </Heading>
         </Box>
         <Image boxSize="100px" src={user.image} alt={user.name} />
