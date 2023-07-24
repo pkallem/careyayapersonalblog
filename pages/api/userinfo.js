@@ -20,8 +20,6 @@ export default async function handler(request, response) {
       }
       
       const newUser = await db.insertInto(userinfo).values({ user_id, bio, resume_link }).execute();
-      console.log("hello");
-      console.log(newUser);
       if (!newUser) {
         return response.status(500).json({ error: 'Could not create user.' });
       }
@@ -31,7 +29,7 @@ export default async function handler(request, response) {
       response.status(405).json({ error: 'Invalid request method' });
     }
   } catch (error) {
-    console.log(error)
-    return response.status(500).json({ error });
+    console.error('Exception caught:', error);
+    return response.status(500).json({ error: error.message }); // send the error message in the response
   }
 }
