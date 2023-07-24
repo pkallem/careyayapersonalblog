@@ -26,6 +26,7 @@ export const authOptions = {
       return session
     },
     async signIn(user, account, profile) {
+      console.log("hello");
       const res = await fetch('https://careyayapersonalblog.vercel.app/api/userinfo', {
         method: 'POST',
         headers: {
@@ -37,7 +38,7 @@ export const authOptions = {
           resume_link: '',
         }),
       });
-  
+      console.log(res)
       // If the user is not created for some reason, we deny the login
       if (res.status !== 200) {
         return false;
