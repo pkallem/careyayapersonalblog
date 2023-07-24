@@ -9,7 +9,7 @@ export default function Portfolio({ user_id }) {
     const fetchData = async () => {
       const res = await fetch(`https://careyayapersonalblog.vercel.app/api/userinfo?id=${user_id}`);
       const data = await res.json();
-      setUser(data.user);
+      setUser(data);
     };
 
     fetchData();
