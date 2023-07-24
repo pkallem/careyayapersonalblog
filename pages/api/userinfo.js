@@ -6,7 +6,7 @@ export default async function handler(request, response) {
     if (request.method === 'GET') {
 
       const rows = await db.select().from(userinfo).where(eq(userinfo.user_id, request.query.user_id));
-      return response.status(200).json({ rows });
+      return response.status(200).json({ userinfo : rows[0] });
 
     } else {
       response.status(405).json({ error: 'Invalid request method' });
