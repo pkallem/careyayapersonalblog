@@ -1,11 +1,15 @@
 import Layout from '../../components/layout';
 import { Box, Heading, Text, VStack, Divider, Image, Textarea, Button, Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/client';
+
 
 export default function Portfolio({ user_id }) {
   const [user, setUser] = useState(null);
   const [bio, setBio] = useState('');
   const [resumeLink, setResumeLink] = useState('');
+  const [session, loading] = useSession();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +47,7 @@ export default function Portfolio({ user_id }) {
       <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
         <Box w="100%">
           <Heading size="lg" alignSelf="center" fontWeight="bold" mb={3}>
-            {user.user_id}
+            {`${author}'s Portfolio`}
           </Heading>
         </Box>
         <Divider />
@@ -53,19 +57,22 @@ export default function Portfolio({ user_id }) {
         <Box w="100%">
           <iframe src={resumeLink} title="Resume" style={{ width: '100%', height: '600px' }} />
         </Box>
-        <Box w="100%">
-          <Heading size="md" fontWeight="bold" mb={3}>Update Your Info:</Heading>
-          <VStack spacing={3}>
-            <Textarea placeholder="Update your bio" value={bio} onChange={(e) => setBio(e.target.value)} />
-            <Input placeholder="Update your resume link" value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} />
-            <Button colorScheme="teal" onClick={updateUserInfo}>Update</Button>
-          </VStack>
-        </Box>
+        {session && session.user.id === user_id && (
+          <Box w="100%">
+            <Heading size="md" fontWeight="bold" mb={3}>Update Your Info:</Heading>
+            <VStack spacing={3}>
+              <Textarea placeholder="Update your bio" value={bio} onChange={(e) => setBio(e.target.value)} />
+              <Input placeholder="Update your resume link" value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} />
+              <Button colorScheme="teal" onClick={updateUserInfo}>Update</Button>
+            </VStack>
+          </Box>
+        )}
       </VStack>
     </Layout>
   );
 }
 
 Portfolio.getInitialProps = async ({ query }) => {
-  return { user_id: query.user_id }
-}
+    return { user_id: query.user_id, author: query.author }
+  }
+  

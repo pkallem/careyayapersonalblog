@@ -28,9 +28,10 @@ export default function Blog({ id }) {
             {blog.title}
           </Heading>
         </Box>
-        <Link href={`/portfolio/${blog.user_id}`}>
+        <Link href={`/portfolio/${blog.user_id}?author=${blog.author}`}>
           <Text fontSize="lg" color="gray.500" cursor="pointer">{`Author: ${blog.author}`}</Text>
         </Link>
+
         <Divider />
         <Text fontSize="md" my={4} lineHeight="1.6">{blog.content}</Text>
       </VStack>
