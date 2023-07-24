@@ -1,14 +1,14 @@
 import Layout from '../../components/layout';
 import { Box, Heading, Text, VStack, Divider, Image, Textarea, Button, Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/react';
 
 
 export default function Portfolio({ user_id }) {
   const [user, setUser] = useState(null);
   const [bio, setBio] = useState('');
   const [resumeLink, setResumeLink] = useState('');
-  const [session, loading] = useSession();
+  const { data: session } = useSession();
 
 
   useEffect(() => {
