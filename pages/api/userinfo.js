@@ -16,6 +16,9 @@ export default async function handler(request, response) {
     } else if (request.method === 'POST') {
       const { user_id, bio, resume_link } = request.body;
       if (!user_id || !bio || !resume_link) {
+        console.log(user_id);
+        console.log(bio);
+        console.log(resume_link);
         return response.status(400).json({ error: 'user_id, bio and resume_link fields are required.' });
       }
       
