@@ -12,6 +12,7 @@ export default function Portfolio({ user_id }) {
       const res = await fetch(`https://careyayapersonalblog.vercel.app/api/userinfo?user_id=${user_id}`);
       const data = await res.json();
       setUser(data.userinfo);
+      console.log(user);
       setBio(data.userinfo.bio);
       setResumeLink(data.userinfo.resume_link);
     };
@@ -20,7 +21,7 @@ export default function Portfolio({ user_id }) {
   }, [user_id]);
 
   const updateUserInfo = async () => {
-    const res = await fetch(`https://careyayapersonalblog.vercel.app/api/userinfo`, {
+    const res = await fetch(`https://careyayapersonalblog.vercel.app/api/userinfo?user_id=${user_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
