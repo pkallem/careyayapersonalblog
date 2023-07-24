@@ -7,7 +7,7 @@ export default function Portfolio({ user_id }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`https://careyayapersonalblog.vercel.app/api/userinfo?id=${user_id}`);
+      const res = await fetch(`https://careyayapersonalblog.vercel.app/api/userinfo?user_id=${user_id}`);
       const data = await res.json();
       console.log(data);
       setUser(data);
