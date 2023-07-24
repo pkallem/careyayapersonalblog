@@ -105,6 +105,7 @@ export default function ProtectedPage() {
     fetchBlogs();
   }, [session]);
 
+
   return (
     <Layout>
       <Flex direction="column" align="center">
