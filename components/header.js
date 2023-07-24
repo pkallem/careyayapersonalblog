@@ -14,7 +14,20 @@ export default function Header() {
   const { data: session, status } = useSession();
   const loading = status === "loading";
   const { colorMode, toggleColorMode } = useColorMode();
-  
+    
+  useEffect(() => {
+    if (session?.user) {
+      fetch('https://careyayapersonalblog.vercel.app/api/userinfo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: session.user.id,
+          bio: "No bio yet",
+          resume_link: ""
+        }),
+      }).catch((error) => console.error('Error in fetch:', error));
+    }
+  }, [session]);
   return (
     <header>
       <noscript>
