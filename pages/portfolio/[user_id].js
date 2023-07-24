@@ -3,13 +3,12 @@ import { Box, Heading, Text, VStack, Divider, Image, Textarea, Button, Input } f
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-
 export default function Portfolio({ user_id, author }) {
   const [user, setUser] = useState(null);
   const [bio, setBio] = useState('');
   const [resumeLink, setResumeLink] = useState('');
   const { data: session } = useSession();
-
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +35,7 @@ export default function Portfolio({ user_id, author }) {
     if (data.message) {
       alert(data.message);
     }
+    setEdit(false); // Hide the edit fields after updating
   };
 
   if (!user) {
@@ -52,19 +52,24 @@ export default function Portfolio({ user_id, author }) {
         </Box>
         <Divider />
         <Box w="100%" my={4}>
+          <Heading size="md" fontWeight="bold" mb={3}>Bio:</Heading>
           <Text fontSize="md" lineHeight="1.6">{bio}</Text>
         </Box>
         <Box w="100%">
-          <iframe src={resumeLink} title="Resume" style={{ width: '100%', height: '600px' }} />
+          <Heading size="md" fontWeight="bold" mb={3}>Resume/CV:</Heading>
+          <iframe src={resumeLink} title="Resume" style={{ width: '100%', height: '1056px' }} />
         </Box>
         {session && session.user.id === user_id && (
           <Box w="100%">
-            <Heading size="md" fontWeight="bold" mb={3}>Update Your Info:</Heading>
-            <VStack spacing={3}>
-              <Textarea placeholder="Update your bio" value={bio} onChange={(e) => setBio(e.target.value)} />
-              <Input placeholder="Update your resume link" value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} />
-              <Button colorScheme="teal" onClick={updateUserInfo}>Update</Button>
-            </VStack>
+            <Button colorScheme="teal" onClick={() => setEdit(!edit)}>Edit</Button>
+            {edit && (
+              <VStack mt={3}>
+                <Heading size="md" fontWeight="bold" mb={3}>Update Your Info:</Heading>
+                <Textarea placeholder="Update your bio" value={bio} onChange={(e) => setBio(e.target.value)} />
+                <Input placeholder="Update your resume link" value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} />
+                <Button colorScheme="teal" onClick={updateUserInfo}>Update</Button>
+              </VStack>
+            )}
           </Box>
         )}
       </VStack>
@@ -73,6 +78,5 @@ export default function Portfolio({ user_id, author }) {
 }
 
 Portfolio.getInitialProps = async ({ query }) => {
-    return { user_id: query.user_id, author: query.author }
-  }
-  
+  return { user_id: query.user_id, author: query.author }
+}
