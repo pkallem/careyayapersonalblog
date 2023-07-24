@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 
-export default function Portfolio({ user_id }) {
+export default function Portfolio({ user_id, author }) {
   const [user, setUser] = useState(null);
   const [bio, setBio] = useState('');
   const [resumeLink, setResumeLink] = useState('');
