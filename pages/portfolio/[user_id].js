@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 export default function Portfolio({ user_id, author }) {
-  const [user, setUser] = useState(null);
-  const [bio, setBio] = useState('');
-  const [resumeLink, setResumeLink] = useState('');
-  const { data: session } = useSession();
-  const [edit, setEdit] = useState(false);
+  const [user, setUser] = useState(null); // state to store user
+  const [bio, setBio] = useState(''); // state to store bio
+  const [resumeLink, setResumeLink] = useState(''); // state to store resume link
+  const { data: session } = useSession(); // auth session
+  const [edit, setEdit] = useState(false); // allow editing
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,5 +1,5 @@
-import { db, userblogs} from './drizzle';
-import {eq} from "drizzle-orm";
+import { db, userblogs } from './drizzle';
+import { eq } from "drizzle-orm";
 
 export default async function handler(request, response) {
   try {
@@ -16,7 +16,7 @@ export default async function handler(request, response) {
       if (!title || !content || !user_id || !author) {
         return response.status(400).json({ error: 'title, content user_id and author fields are required.' });
       }
-      await db.insert(userblogs).values({ title: title, content : content, user_id: user_id, author: author});
+      await db.insert(userblogs).values({ title: title, content: content, user_id: user_id, author: author });
       return response.status(200).json({ message: 'Blog created.' });
     } else if (request.method === 'DELETE') {
       const { id, user_id } = request.body;
@@ -32,7 +32,7 @@ export default async function handler(request, response) {
         return response.status(400).json({ error: 'id, newTitle, newContent, user_id, and author fields are required.' });
       }
       const rows = await db.select().from(userblogs).where(eq(userblogs.id, id));
-      await db.update(userblogs).set({title: newTitle, content: newContent, user_id: user_id, author: author}).where(eq(userblogs.id, id));
+      await db.update(userblogs).set({ title: newTitle, content: newContent, user_id: user_id, author: author }).where(eq(userblogs.id, id));
       return response.status(200).json({ message: 'Blog updated.' });
     } else {
       response.status(405).json({ error: 'Invalid request method' });
