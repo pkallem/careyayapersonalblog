@@ -1,5 +1,5 @@
 import Layout from '../../components/layout';
-import { Box, Heading, Text, VStack, Divider, Image, Textarea, Button, Input } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, Divider, Textarea, Button, Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
@@ -35,7 +35,7 @@ export default function Portfolio({ user_id, author }) {
     if (data.message) {
       alert(data.message);
     }
-    setEdit(false); // Hide the edit fields after updating
+    setEdit(false);
   };
 
   if (!user) {
@@ -55,12 +55,12 @@ export default function Portfolio({ user_id, author }) {
           <Heading size="md" fontWeight="bold" mb={3}>Bio:</Heading>
           <Text fontSize="md" lineHeight="1.6">{bio}</Text>
         </Box>
-        <Box w="100%">
+        <Box w="100%" position="relative" style={{paddingBottom: '77.34375%'}}>
           <Heading size="md" fontWeight="bold" mb={3}>Resume/CV:</Heading>
-          <iframe src={resumeLink} title="Resume" style={{ width: '100%', height: '1056px' }} />
+          <iframe src={resumeLink} title="Resume" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
         </Box>
         {session && session.user.id === user_id && (
-          <Box w="100%">
+          <Box w="100%" mb={8}>
             <Button colorScheme="teal" onClick={() => setEdit(!edit)}>Edit</Button>
             {edit && (
               <VStack mt={3}>

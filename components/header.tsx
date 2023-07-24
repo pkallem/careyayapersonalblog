@@ -77,6 +77,12 @@ export default function Header() {
                     My Blogs
                   </a>
                   <a
+                    href={`https://careyayapersonalblog.vercel.app/portfolio/${session.user?.id}?author=${session.user.name}`}
+                    className={styles.button}
+                  >
+                    Portfolio
+                  </a>
+                  <a
                     href={`https://careyayapersonalblog.vercel.app`}
                     className={styles.button}
                   >
