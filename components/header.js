@@ -23,7 +23,7 @@ export default function Header() {
         body: JSON.stringify({
           user_id: session.user.id,
           bio: "No bio yet",
-          resume_link: "blank"
+          resume_link: "https://mag.wcoomd.org/uploads/2018/05/blank.pdf"
         }),
       }).catch((error) => console.error('Error in fetch:', error));
     }
@@ -124,6 +124,9 @@ export default function Header() {
                             </Link>
                             <Link href="/protected">
                               <Button>My Blogs</Button>
+                            </Link>
+                            <Link href={`https://careyayapersonalblog.vercel.app/portfolio/${session.user?.id}?author=${session.user.name}`}>
+                              <Button>My Portfolio</Button>
                             </Link>
                             <Button onClick={toggleColorMode}>{colorMode === 'dark' ? 'Light Mode' : 'Dark Mode'}</Button>
                             <Button onClick={(e) => { e.preventDefault(); signOut(); }}>Sign Out</Button>
