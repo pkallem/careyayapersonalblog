@@ -1,8 +1,11 @@
+import { useSession } from 'next-auth/react';
 import Layout from '../../components/layout';
 import { Box, Heading, Image, VStack, Divider, Textarea, Button, Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 export default function Portfolio({ user_id }) {
+  const { data: session } = useSession();
+  const loggedInUserId = session?.user?.id;
   const [user, setUser] = useState(null);
   const [bio, setBio] = useState('');
   const [resumeLink, setResumeLink] = useState('');
@@ -12,7 +15,6 @@ export default function Portfolio({ user_id }) {
       const res = await fetch(`https://careyayapersonalblog.vercel.app/api/userinfo?user_id=${user_id}`);
       const data = await res.json();
       setUser(data.userinfo);
-      console.log(user);
       setBio(data.userinfo.bio);
       setResumeLink(data.userinfo.resume_link);
     };
@@ -47,14 +49,18 @@ export default function Portfolio({ user_id }) {
         <iframe src={resumeLink} title="Resume"></iframe>
       </Box>
       <Divider mt={5} mb={5} />
-      <Box>
-        <Heading mb={3}>Update Your Info:</Heading>
-        <VStack spacing={3}>
-          <Textarea placeholder="Update your bio" value={bio} onChange={(e) => setBio(e.target.value)} />
-          <Input placeholder="Update your resume link" value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} />
-          <Button colorScheme="teal" onClick={updateUserInfo}>Update</Button>
-        </VStack>
-      </Box>
+      {
+        session && loggedInUserId == user.user_id ? (
+          <Box>
+            <Heading mb={3}>Update Your Info:</Heading>
+            <VStack spacing={3}>
+              <Textarea placeholder="Update your bio" value={bio} onChange={(e) => setBio(e.target.value)} />
+              <Input placeholder="Update your resume link" value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} />
+              <Button colorScheme="teal" onClick={updateUserInfo}>Update</Button>
+            </VStack>
+          </Box>
+        ) : null
+      }
     </Layout>
   );
 }
