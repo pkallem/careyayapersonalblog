@@ -23,7 +23,7 @@ export default function Header() {
         body: JSON.stringify({
           user_id: session.user.id,
           bio: "No bio yet",
-          resume_link: ""
+          resume_link: "blank"
         }),
       }).catch((error) => console.error('Error in fetch:', error));
     }
