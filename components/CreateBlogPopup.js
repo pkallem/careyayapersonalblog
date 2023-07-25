@@ -14,17 +14,12 @@ import {
   Input
 } from "@chakra-ui/react";
 
-interface CreateBlogPopupProps {
-  onClose: () => void;
-  onAddBlog: (title: string, content: string) => void;
-}
-
-export default function CreateBlogPopup({ onClose, onAddBlog }: CreateBlogPopupProps) {
+export default function CreateBlogPopup({ onClose, onAddBlog }) {
   const [blogTitle, setBlogTitle] = useState<string>('');
   const [blogContent, setBlogContent] = useState<string>('');
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setBlogTitle(e.target.value);
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setBlogContent(e.target.value);
+  const handleTitleChange = (e) => setBlogTitle(e.target.value);
+  const handleContentChange = (e) => setBlogContent(e.target.value);
   
   const handleAddBlog = () => {
     onAddBlog(blogTitle, blogContent);

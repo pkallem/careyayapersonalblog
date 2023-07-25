@@ -3,18 +3,8 @@ import Link from 'next/link';
 import Layout from '../components/layout';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 
-interface Blog {
-  id: number;
-  title: string;
-  content: string;
-  user_id: number;
-  author: string;
-}
-
-interface HomeProps { }
-
-export default function Home(props: HomeProps) {
-  const [apiResult, setApiResult] = useState<Blog[]>([]);
+export default function Home(props) {
+  const [apiResult, setApiResult] = useState([]);
 
   const fetchBlogs = async () => {
     try {

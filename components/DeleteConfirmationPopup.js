@@ -9,12 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-interface DeleteConfirmationPopupProps {
-  onClose: () => void;
-  onConfirm: () => void;
-}
-
-export default function DeleteConfirmationPopup({ onClose, onConfirm }: DeleteConfirmationPopupProps) {
+export default function DeleteConfirmationPopup({ onClose, onConfirm }) {
   const cancelRef = useRef<HTMLButtonElement | null>(null);
 
   return (

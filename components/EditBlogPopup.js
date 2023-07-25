@@ -14,24 +14,12 @@ import {
   Input
 } from "@chakra-ui/react";
 
-interface Blog {
-  id: number;
-  title: string;
-  content: string;
-}
-
-interface EditBlogPopupProps {
-  blog: Blog;
-  onClose: () => void;
-  onEditBlog: (id: number, newTitle: string, newContent: string) => void;
-}
-
-export default function EditBlogPopup({ blog, onClose, onEditBlog }: EditBlogPopupProps) {
+export default function EditBlogPopup({ blog, onClose, onEditBlog }) {
   const [newTitle, setNewTitle] = useState(blog.title);
   const [newContent, setNewContent] = useState(blog.content);
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value);
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setNewContent(e.target.value);
+  const handleTitleChange = (e) => setNewTitle(e.target.value);
+  const handleContentChange = (e) => setNewContent(e.target.value);
   const handleEditBlog = () => {
     onEditBlog(blog.id, newTitle, newContent);
     onClose();
