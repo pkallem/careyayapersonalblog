@@ -22,9 +22,18 @@ export default function Blog({ id }) {
   }
 
 
-  const createMarkup = (text) => {
-    return { __html: text.replace(/\n/g, '<br/>') };
-  }
+    // Function to create markup from string
+    const createMarkup = (text) => {
+      const replacedText = text
+        .replace(/\n/g, '<br/>') // Replace newline characters with <br/>
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Replace **bold text** with <strong>bold text</strong>
+        .replace(/__(.+?)__/g, '<strong>$1</strong>') // Replace __bold text__ with <strong>bold text</strong>
+        .replace(/\*(.+?)\*/g, '<em>$1</em>') // Replace *italic text* with <em>italic text</em>
+        .replace(/_(.+?)_/g, '<em>$1</em>') // Replace _italic text_ with <em>italic text</em>
+        .replace(/~~(.+?)~~/g, '<u>$1</u>'); // Replace ~~underline text~~ with <u>underline text</u>
+      return { __html: replacedText };
+    }
+
 
   return (
     <Layout>
