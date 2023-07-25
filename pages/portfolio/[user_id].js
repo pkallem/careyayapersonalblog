@@ -43,7 +43,6 @@ export default function Portfolio({ user_id, author }) {
     return <div>Loading...</div>;
   }
 
-  // Function to create markup from string
   const createMarkup = (text) => {
     let replacedText = text
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Replace **bold text** with <strong>bold text</strong>
@@ -53,29 +52,11 @@ export default function Portfolio({ user_id, author }) {
       .replace(/~~(.+?)~~/g, '<u>$1</u>') // Replace ~~underline text~~ with <u>underline text</u>
       .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>') // Replace [Link text](URL) with <a href="URL">Link text</a>
 
-    // Replace unordered lists
-    replacedText = replacedText.split('\n').map(line => {
-      if (/^(\*|-|\+)\s/.test(line)) {
-        return `<li>${line.substring(2)}</li>`
-      }
-      return line;
-    }).join('\n').replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>');
-
-    // Replace ordered lists
-    replacedText = replacedText.split('\n').map(line => {
-      if (/^\d+\.\s/.test(line)) {
-        return `<li>${line.substring(line.indexOf('.') + 2)}</li>`
-      }
-      return line;
-    }).join('\n').replace(/(<li>.*<\/li>)/g, '<ol>$1</ol>');
-
     // Replace newline characters with <br/>
     replacedText = replacedText.replace(/\n/g, '<br/>')
 
     return { __html: replacedText };
   }
-
-
 
   return (
     <Layout>
@@ -104,7 +85,7 @@ export default function Portfolio({ user_id, author }) {
           <Text fontSize="md" lineHeight="1.6" dangerouslySetInnerHTML={createMarkup(bio)} />
         </Box>
         <Heading size="md" fontWeight="bold" mb={3}>Resume/CV:</Heading>
-        <Box w="100%" position="relative" style={{ paddingBottom: '77.34375%' }}>
+        <Box paddingBottom="4">
           <iframe src={resumeLink} title="Resume" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
         </Box>
       </VStack>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '../components/layout';
-import { useSession } from 'next-auth/react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 
 interface Blog {
@@ -36,7 +35,6 @@ export default function Home(props: HomeProps) {
       <Flex direction="column" align="start" width="80%" maxWidth="700px" m="0 auto">
         <Heading as="h1" size="2xl" mt={6} mb={6}>Feed</Heading>
         {apiResult.map((blog) => (
-          
           <Box 
             key={blog.id} 
             p={5} 
@@ -53,7 +51,6 @@ export default function Home(props: HomeProps) {
               <Text mt={4}>{blog.author}</Text>
             </Link>
           </Box>
-          
         ))}
       </Flex>
     </Layout>
