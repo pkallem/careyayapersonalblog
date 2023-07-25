@@ -1,3 +1,4 @@
+import React from "react";
 import Layout from '../components/layout';
 import { Box, Heading, Text, VStack, Divider } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -20,6 +21,11 @@ export default function Blog({ id }) {
     return <div>Loading...</div>;
   }
 
+
+  const createMarkup = (text) => {
+    return { __html: text.replace(/\n/g, '<br/>') };
+  }
+
   return (
     <Layout>
       <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
@@ -29,11 +35,11 @@ export default function Blog({ id }) {
           </Heading>
         </Box>
         <Link href={`/portfolio/${blog.user_id}?author=${blog.author}`}>
-          <Text fontSize="lg" color="gray.500" cursor="pointer">{`Author: ${blog.author}`}</Text>
+          <Text fontSize="lg" color="gray.500" cursor="pointer" style={{ textDecoration: 'underline' }}>{`Author: ${blog.author}`}</Text>
         </Link>
-
         <Divider />
-        <Text fontSize="md" my={4} lineHeight="1.6">{blog.content}</Text>
+        {/* Render text with HTML */}
+        <Text fontSize="md" my={4} lineHeight="1.6" dangerouslySetInnerHTML={createMarkup(blog.content)} />
       </VStack>
     </Layout>
   );
