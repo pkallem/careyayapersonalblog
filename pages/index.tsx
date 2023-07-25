@@ -36,7 +36,7 @@ export default function Home(props: HomeProps) {
       <Flex direction="column" align="start" width="80%" maxWidth="700px" m="0 auto">
         <Heading as="h1" size="2xl" mt={6} mb={6}>Feed</Heading>
         {apiResult.map((blog) => (
-          <Link href={`/${blog.id}`}>
+          
           <Box 
             key={blog.id} 
             p={5} 
@@ -48,12 +48,12 @@ export default function Home(props: HomeProps) {
             width="100%"
             mb={6}
           >
-            
+            <Link href={`/${blog.id}`}>
               <Heading fontSize="xl" noOfLines={4}>{blog.title}</Heading>
-            
-            <Text mt={4}>{blog.author}</Text>
+              <Text mt={4}>{blog.author}</Text>
+            </Link>
           </Box>
-          </Link>
+          
         ))}
       </Flex>
     </Layout>
