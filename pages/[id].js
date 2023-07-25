@@ -38,7 +38,7 @@ export default function Blog({ id }) {
 
   return (
     <Layout>
-      <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
+      <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" pb='5' w="100%" m="0 auto">
         <Box w="100%">
           <Heading size="lg" alignSelf="center" fontWeight="bold" mb={3} isTruncated={false}>
             {blog.title}

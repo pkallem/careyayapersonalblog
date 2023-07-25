@@ -58,6 +58,8 @@ export default function Portfolio({ user_id, author }) {
     return { __html: replacedText };
   }
 
+
+
   return (
     <Layout>
       <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
@@ -85,9 +87,10 @@ export default function Portfolio({ user_id, author }) {
           <Text fontSize="md" lineHeight="1.6" dangerouslySetInnerHTML={createMarkup(bio)} />
         </Box>
         <Heading size="md" fontWeight="bold" mb={3}>Resume/CV:</Heading>
-        <Box paddingBottom="4">
+        <Box w="100%" position="relative" style={{ paddingBottom: '77.34375%' }} pb={5}>
           <iframe src={resumeLink} title="Resume" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
         </Box>
+
       </VStack>
     </Layout>
   );
