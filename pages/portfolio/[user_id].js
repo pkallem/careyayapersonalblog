@@ -87,9 +87,12 @@ export default function Portfolio({ user_id, author }) {
           <Text fontSize="md" lineHeight="1.6" dangerouslySetInnerHTML={createMarkup(bio)} />
         </Box>
         <Heading size="md" fontWeight="bold" mb={3}>Resume/CV:</Heading>
-        <Box w="100%" position="relative" pb={5} >
-          <iframe src={resumeLink} title="Resume" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+        <Box w="100%" pb={5}>
+          <Box position="relative" style={{ paddingBottom: '90%' }}>
+            <iframe src={resumeLink} title="Resume" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+          </Box>
         </Box>
+
 
       </VStack>
     </Layout>
