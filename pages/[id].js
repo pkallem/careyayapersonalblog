@@ -22,17 +22,38 @@ export default function Blog({ id }) {
   }
 
 
-    // Function to create markup from string
-    const createMarkup = (text) => {
-      const replacedText = text
-        .replace(/\n/g, '<br/>') // Replace newline characters with <br/>
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Replace **bold text** with <strong>bold text</strong>
-        .replace(/__(.+?)__/g, '<strong>$1</strong>') // Replace __bold text__ with <strong>bold text</strong>
-        .replace(/\*(.+?)\*/g, '<em>$1</em>') // Replace *italic text* with <em>italic text</em>
-        .replace(/_(.+?)_/g, '<em>$1</em>') // Replace _italic text_ with <em>italic text</em>
-        .replace(/~~(.+?)~~/g, '<u>$1</u>'); // Replace ~~underline text~~ with <u>underline text</u>
-      return { __html: replacedText };
-    }
+  // Function to create markup from string
+  const createMarkup = (text) => {
+    let replacedText = text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Replace **bold text** with <strong>bold text</strong>
+      .replace(/__(.+?)__/g, '<strong>$1</strong>') // Replace __bold text__ with <strong>bold text</strong>
+      .replace(/\*(.+?)\*/g, '<em>$1</em>') // Replace *italic text* with <em>italic text</em>
+      .replace(/_(.+?)_/g, '<em>$1</em>') // Replace _italic text_ with <em>italic text</em>
+      .replace(/~~(.+?)~~/g, '<u>$1</u>') // Replace ~~underline text~~ with <u>underline text</u>
+      .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>') // Replace [Link text](URL) with <a href="URL">Link text</a>
+
+    // Replace unordered lists
+    replacedText = replacedText.split('\n').map(line => {
+      if (/^(\*|-|\+)\s/.test(line)) {
+        return `<li>${line.substring(2)}</li>`
+      }
+      return line;
+    }).join('\n').replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>');
+
+    // Replace ordered lists
+    replacedText = replacedText.split('\n').map(line => {
+      if (/^\d+\.\s/.test(line)) {
+        return `<li>${line.substring(line.indexOf('.') + 2)}</li>`
+      }
+      return line;
+    }).join('\n').replace(/(<li>.*<\/li>)/g, '<ol>$1</ol>');
+
+    // Replace newline characters with <br/>
+    replacedText = replacedText.replace(/\n/g, '<br/>')
+
+    return { __html: replacedText };
+  }
+
 
 
   return (

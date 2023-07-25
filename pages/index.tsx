@@ -44,12 +44,12 @@ export default function Home(props: HomeProps) {
             borderWidth={1} 
             borderRadius="lg"
             overflow="auto"
-            h="200px" 
+            h="150px" 
             width="100%"
             mb={6}
           >
             <Link href={`/${blog.id}`}>
-              <Heading fontSize="xl" noOfLines={4}>{blog.title}</Heading>
+              <Heading fontSize="xl" noOfLines={2}>{blog.title}</Heading>
               <Text mt={4}>{blog.author}</Text>
             </Link>
           </Box>
