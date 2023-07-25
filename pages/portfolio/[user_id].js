@@ -1,3 +1,4 @@
+import React from 'react';
 import Layout from '../../components/layout';
 import { Box, Heading, Text, VStack, Divider, Textarea, Button, Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -42,6 +43,11 @@ export default function Portfolio({ user_id, author }) {
     return <div>Loading...</div>;
   }
 
+  // Function to create markup from string
+  const createMarkup = (text) => {
+    return { __html: text.replace(/\n/g, '<br/>') };
+  }
+
   return (
     <Layout>
       <VStack pt={10} alignItems="start" spacing={8} px={4} maxW="800px" w="100%" m="0 auto">
@@ -66,13 +72,12 @@ export default function Portfolio({ user_id, author }) {
         )}
         <Box w="100%" my={4}>
           <Heading size="md" fontWeight="bold" mb={3}>About Me</Heading>
-          <Text fontSize="md" lineHeight="1.6">{bio}</Text>
+          <Text fontSize="md" lineHeight="1.6" dangerouslySetInnerHTML={createMarkup(bio)} />
         </Box>
         <Heading size="md" fontWeight="bold" mb={3}>Resume/CV:</Heading>
         <Box w="100%" position="relative" style={{paddingBottom: '77.34375%'}}>
           <iframe src={resumeLink} title="Resume" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
         </Box>
-        
       </VStack>
     </Layout>
   );
