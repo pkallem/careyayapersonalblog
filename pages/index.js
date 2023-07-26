@@ -49,12 +49,7 @@ export default function Home(props) {
           >
             <Link href={`/${blog.id}`}>
               <Heading fontSize="xl" noOfLines={2}>{blog.title}</Heading>
-              <Text mt={4}>{blog.author} |               
-              <Flex align="center">
-                <FaRegClock size="1em" />
-                <Text ml={2}>{readingTime(blog.content)}</Text>
-              </Flex>
-              </Text>
+              <Text mt={4}>{blog.author} | <FaRegClock size="1em" /> <Text ml={2}>{readingTime(blog.content)}</Text></Text>
 
             </Link>
           </Box>
