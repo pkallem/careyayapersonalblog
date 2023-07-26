@@ -51,12 +51,14 @@ export default function Portfolio({ user_id, author }) {
       .replace(/_(.+?)_/g, '<em>$1</em>') // Replace _italic text_ with <em>italic text</em>
       .replace(/~~(.+?)~~/g, '<u>$1</u>') // Replace ~~underline text~~ with <u>underline text</u>
       .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>') // Replace [Link text](URL) with <a href="URL">Link text</a>
+      .replace(/##(.+?)##/g, '<h2>$1</h2>') // Replace ##Heading text## with <h2>Heading text</h2>
 
     // Replace newline characters with <br/>
     replacedText = replacedText.replace(/\n/g, '<br/>')
 
     return { __html: replacedText };
   }
+
 
 
 

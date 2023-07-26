@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function DeleteConfirmationPopup({ onClose, onConfirm }) {
-  const cancelRef = useRef<HTMLButtonElement | null>(null);
+  const cancelRef = useRef(null);
 
   return (
     <AlertDialog
