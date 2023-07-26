@@ -22,7 +22,7 @@ export default function Home(props) {
   }, []);
 
   const readingTime = (content) => {
-    const wordsPerMinute = 150;
+    const wordsPerMinute = 100;
     let textLength = content.split(' ').length;
     if(textLength > 0){
       let value = Math.ceil(textLength / wordsPerMinute);
@@ -49,11 +49,13 @@ export default function Home(props) {
           >
             <Link href={`/${blog.id}`}>
               <Heading fontSize="xl" noOfLines={2}>{blog.title}</Heading>
-              <Text mt={4}>{blog.author}</Text>
+              <Text mt={4}>{blog.author} |               
               <Flex align="center">
                 <FaRegClock size="1em" />
                 <Text ml={2}>{readingTime(blog.content)}</Text>
               </Flex>
+              </Text>
+
             </Link>
           </Box>
         ))}
