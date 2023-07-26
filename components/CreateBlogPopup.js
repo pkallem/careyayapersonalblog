@@ -15,8 +15,8 @@ import {
 } from "@chakra-ui/react";
 
 export default function CreateBlogPopup({ onClose, onAddBlog }) {
-  const [blogTitle, setBlogTitle] = useState<string>('');
-  const [blogContent, setBlogContent] = useState<string>('');
+  const [blogTitle, setBlogTitle] = useState('');
+  const [blogContent, setBlogContent] = useState('');
 
   const handleTitleChange = (e) => setBlogTitle(e.target.value);
   const handleContentChange = (e) => setBlogContent(e.target.value);

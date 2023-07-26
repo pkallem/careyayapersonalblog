@@ -20,6 +20,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["process.d.ts", "next-env.d.ts", "next-auth.d.ts", "**/*.ts", "**/*.tsx", "pages/[id].js", "pages/api/auth/[...nextauth].js", "components/header.js"],
+  "include": ["process.d.ts", "next-env.d.ts", "next-auth.d.ts", "**/*.ts", "**/*.tsx", "pages/[id].js", "pages/api/auth/[...nextauth].js", "components/header.js", "components/EditBlogPopup.js", "components/DeleteConfirmationPopup.js", "components/CreateBlogPopup.js", "components/layout.js", "pages/index.js", "pages/api/drizzle.js", "pages/_app.js"],
   "exclude": ["node_modules"]
 }
