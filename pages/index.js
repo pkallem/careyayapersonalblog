@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '../components/layout';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
+import { FaRegClock } from 'react-icons/fa';
 
 export default function Home(props) {
   const [apiResult, setApiResult] = useState([]);
@@ -19,6 +20,16 @@ export default function Home(props) {
   useEffect(() => {
     fetchBlogs();
   }, []);
+
+  const readingTime = (content) => {
+    const wordsPerMinute = 150;
+    let textLength = content.split(' ').length;
+    if(textLength > 0){
+      let value = Math.ceil(textLength / wordsPerMinute);
+      return `~${value} mins`;
+    }
+    return "< 1 min";
+  };
 
   return (
     <Layout>
@@ -39,6 +50,10 @@ export default function Home(props) {
             <Link href={`/${blog.id}`}>
               <Heading fontSize="xl" noOfLines={2}>{blog.title}</Heading>
               <Text mt={4}>{blog.author}</Text>
+              <Flex align="center">
+                <FaRegClock size="1em" />
+                <Text ml={2}>{readingTime(blog.content)}</Text>
+              </Flex>
             </Link>
           </Box>
         ))}
