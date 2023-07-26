@@ -26,9 +26,13 @@ export default function Home(props) {
     let textLength = content.split(' ').length;
     if(textLength > 0){
       let value = Math.ceil(textLength / wordsPerMinute);
+      if (value <= 1) {
+        return "< 1 min";
+      } else {
       return `~${value} mins`;
+      }
     }
-    return "< 1 min";
+    return "Quick"
   };
 
   return (
